@@ -52,7 +52,7 @@ fun main(args: Array<String>) {
  * Рассчитать время в секундах, прошедшее с начала суток (30035 в данном случае).
  */
 fun seconds(hours: Int, minutes: Int, seconds: Int): Int {
-    return seconds + minutes*60 + hours*3600
+    return seconds + minutes * 60 + hours * 3600
 }
 
 /**
@@ -63,7 +63,7 @@ fun seconds(hours: Int, minutes: Int, seconds: Int): Int {
  * 1 сажень = 3 аршина = 48 вершков, 1 вершок = 4.445 см.
  */
 fun lengthInMeters(sagenes: Int, arshins: Int, vershoks: Int): Double {
-    return (sagenes*48 + arshins*16 + vershoks)*4.445/100
+    return (sagenes * 48 + arshins * 16 + vershoks) * 4.445 / 100
 }
 
 /**
@@ -73,7 +73,7 @@ fun lengthInMeters(sagenes: Int, arshins: Int, vershoks: Int): Double {
  * Вывести значение того же угла в радианах (например, 0.63256).
  */
 fun angleInRadian(grad: Int, min: Int, sec: Int): Double {
-    return (sec/3600.0 + min/60.0 + grad)*PI/180
+    return (sec / 3600.0 + min / 60.0 + grad) * PI / 180
 }
 
 /**
@@ -83,7 +83,7 @@ fun angleInRadian(grad: Int, min: Int, sec: Int): Double {
  * Например, расстояние между (3, 0) и (0, 4) равно 5
  */
 fun trackLength(x1: Double, y1: Double, x2: Double, y2: Double): Double {
-    return sqrt((x1-x2)*(x1-x2)+ (y1-y2)*(y1-y2))
+    return sqrt(sqr(x1 - x2) + sqr(y1 - y2))
 }
 
 /**
@@ -93,7 +93,7 @@ fun trackLength(x1: Double, y1: Double, x2: Double, y2: Double): Double {
  * Определить третью цифру справа в этом числе (в данном случае 8).
  */
 fun thirdDigit(number: Int): Int {
-    return (number%1000)/100
+    return (number%1000) / 100
 }
 
 /**
@@ -104,7 +104,7 @@ fun thirdDigit(number: Int): Int {
  * Определите время поезда в пути в минутах (в данном случае 216).
  */
 fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minutesArrive: Int): Int {
-    return (hoursArrive*60 + minutesArrive) - (hoursDepart*60 + minutesDepart)
+    return (hoursArrive * 60 + minutesArrive) - (hoursDepart * 60 + minutesDepart)
 }
 
 /**
@@ -115,7 +115,7 @@ fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minute
  * Например, 100 рублей под 10% годовых превратятся в 133.1 рубля
  */
 fun accountInThreeYears(initial: Int, percent: Int): Double {
-    return initial*(percent/100.0+1)*(percent/100.0+1)*(percent/100.0+1)
+    return initial * (percent / 100.0 + 1) * (percent / 100.0 + 1) * (percent / 100.0 + 1)
 }
 
 /**
@@ -125,5 +125,5 @@ fun accountInThreeYears(initial: Int, percent: Int): Double {
  *Необходимо вывести число, полученное из заданного перестановкой цифр в обратном порядке (например, 874).
  */
 fun numberRevert(number: Int): Int {
-    return number/100 +  number%100/10*10 + number%10*100
+    return number / 100 +  number%100 / 10 * 10 + number%10 * 100
 }
