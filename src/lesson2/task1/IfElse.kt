@@ -119,7 +119,7 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
  */
 fun triangleKind(a: Double, b: Double, c: Double): Int {
     return when {
-        (a > (b + c)) or (b > (a + c)) or (c > (a + b)) or (a == 0.0) or (b == 0.0) or (c == 0.0) -> -1
+        (a > (b + c)) or (b > (a + c)) or (c > (a + b)) or (a == 0.0) or (c == 0.0) or (b == 0.0) -> -1
         (a > b) and (a > c) and (a * a == b * b + c * c) -> 1
         (a > b) and (a > c) and (a * a > b * b + c * c) -> 2
         (a > b) and (a > c) and (a * a < b * b + c * c) -> 0
