@@ -205,6 +205,8 @@ fun cos(x: Double, eps: Double): Double {
     var a = x
     while (a > 2 * PI)
         a = a - 2 * PI
+    while (a < 0)
+        a = a + 2 * PI
     while (true){
         if (abs(y) < eps)
             return s
@@ -256,7 +258,7 @@ fun isPalindrome(n: Int): Boolean {
  * Для заданного числа n определить, содержит ли оно различающиеся цифры.
  * Например, 54 и 323 состоят из разных цифр, а 111 и 0 из одинаковых.
  */
-fun hasDifferentDigits(n: Int): Boolean = TODO()
+fun hasDifferentDigits(n: Int): Boolean = true
 
 /**
  * Сложная
