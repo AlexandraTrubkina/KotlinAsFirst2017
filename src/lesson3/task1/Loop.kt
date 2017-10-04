@@ -1,6 +1,7 @@
 @file:Suppress("UNUSED_PARAMETER")
 package lesson3.task1
 
+import lesson1.task1.sqr
 import java.lang.Math.*
 
 /**
@@ -258,7 +259,7 @@ fun isPalindrome(n: Int): Boolean {
  * Для заданного числа n определить, содержит ли оно различающиеся цифры.
  * Например, 54 и 323 состоят из разных цифр, а 111 и 0 из одинаковых.
  */
-fun hasDifferentDigits(n: Int): Boolean = true
+fun hasDifferentDigits(n: Int): Boolean = TODO()
 
 /**
  * Сложная
@@ -268,8 +269,51 @@ fun hasDifferentDigits(n: Int): Boolean = true
  * Например, 2-я цифра равна 4, 7-я 5, 12-я 6.
  */
 
+fun LengthOfNumber(x: Int): Int {
+    var y = x
+    var result = 1
+    while (true){
+       y = y / 10
+        if (y == 0) {
+            return result
+        }
+      result = result + 1
+    }
+}
+fun FigureByPosition(t: Int, n: Int): Int {
+    var m = 0
+    var x = t
+    m = LengthOfNumber(t) - n + 1
+    while(true){
+        m = m - 1
+        m--
+        if(m == 0){
+          return x % 10
+        }
+        else {
+          x = x / 10
+        }
+    }
+}
+fun squareSequenceDigit(n: Int):Int {
+    var i = 1
+    var i_sqr = 0
+    var i_sqr_length = 0
+    var m = n
+    while (true){
+        i_sqr = i * i
+        i_sqr_length = LengthOfNumber(i_sqr)
+        if(m > i_sqr_length ){
+          m = m - i_sqr_length
+          i++
+        }
+        else {
+           return FigureByPosition(i_sqr, m)
+        }
+    }
 
-fun squareSequenceDigit(n: Int):Int = TODO()
+}
+
 
 /**
  * Сложная
