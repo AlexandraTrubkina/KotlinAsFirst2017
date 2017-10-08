@@ -3,6 +3,7 @@
 package lesson2.task1
 
 import lesson1.task1.discriminant
+import lesson1.task1.sqr
 import java.lang.Math.*
 
 /**
@@ -55,11 +56,11 @@ fun ageDescription(age: Int): String {
 fun timeForHalfWay(t1: Double, v1: Double,
                    t2: Double, v2: Double,
                    t3: Double, v3: Double): Double {
-    val s = t1 * v1 + t2 * v2 + t3 * v3
+    val halfL = (t1 * v1 + t2 * v2 + t3 * v3) / 2
     return when {
-        s/2 <= t1 * v1 -> (s/2)/v1
-        s/2 <= t2 * v2 + t1 * v1 -> (s/2 - t1 * v1) / v2 + t1
-        else ->    (s/2 - t1 * v1 - t2 * v2) / v3 + t1 + t2
+        halfL <= t1 * v1 -> (halfL) / v1
+        halfL <= t2 * v2 + t1 * v1 -> (halfL - t1 * v1) / v2 + t1
+        else ->    (halfL - t1 * v1 - t2 * v2) / v3 + t1 + t2
     }
 }
 
@@ -118,17 +119,14 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
  * Если такой треугольник не существует, вернуть -1.
  */
 fun triangleKind(a: Double, b: Double, c: Double): Int {
+    val maxL = max(max(a, b), c)
+    val minL = min(min(a, b), c)
+    val mediumL = (a + b + c) - maxL - minL
     return when {
-        (a > (b + c)) or (b > (a + c)) or (c > (a + b)) or (a == 0.0) or (c == 0.0) or (b == 0.0) -> -1
-        (a > b) and (a > c) and (a * a == b * b + c * c) -> 1
-        (a > b) and (a > c) and (a * a > b * b + c * c) -> 2
-        (a > b) and (a > c) and (a * a < b * b + c * c) -> 0
-        (c > b) and (c > a) and (c * c == b * b + a * a) -> 1
-        (c > b) and (c > a) and (c * c > b * b + a * a) -> 2
-        (c > b) and (c > a) and (c * c < b * b + a * a) -> 0
-        (b > c) and (b > a) and (b * b == a * a + c * c) -> 1
-        (b > c) and (b > a) and (b * b > a * a + c * c) -> 2
-        else -> 0
+       minL * minL + mediumL * mediumL == maxL * maxL ->  1
+        minL * minL + mediumL * mediumL > maxL * maxL -> 0
+         minL  + mediumL  > maxL -> 2
+        else -> -1
     }
 }
 

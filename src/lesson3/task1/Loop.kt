@@ -53,8 +53,8 @@ fun isPerfect(n: Int): Boolean {
 fun digitCountInNumber(n: Int, m: Int): Int =
         when {
             n == m -> 1
-            n < 10 -> 0
-            else -> digitCountInNumber(n / 10, m) + digitCountInNumber(n % 10, m)
+             n < 10 -> 0
+              else -> digitCountInNumber(n / 10, m) + digitCountInNumber(n % 10, m)
         }
 
 /**
@@ -285,7 +285,6 @@ fun FigureByPosition(t: Int, n: Int): Int {
     var x = t
     m = LengthOfNumber(t) - n + 1
     while(true){
-        m = m - 1
         m--
         if(m == 0){
           return x % 10
