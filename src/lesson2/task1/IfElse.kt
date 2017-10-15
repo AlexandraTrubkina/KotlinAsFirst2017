@@ -40,9 +40,9 @@ fun ageDescription(age: Int): String {
     val a = age % 10
     val b = age % 100
     return when {
-        ((a >= 5) && (a <= 9)) || ((b >= 10)&& (b <=19)) || (a == 0) -> "$age лет"
-        ((a >= 2) && (a <= 4)) && ((age <10) || (age >19) || (age < 112) || (age > 119))-> "$age года"
-        else -> "$age год"
+        (a in 5..9) || (b in 10..19) || a == 0 -> "$age лет"
+        a == 1 -> "$age год"
+        else -> "$age года"
     }
 }
 
@@ -58,9 +58,9 @@ fun timeForHalfWay(t1: Double, v1: Double,
                    t3: Double, v3: Double): Double {
     val halfL = (t1 * v1 + t2 * v2 + t3 * v3) / 2
     return when {
-        halfL <= t1 * v1 -> (halfL) / v1
+        halfL <= t1 * v1 -> halfL / v1
         halfL <= t2 * v2 + t1 * v1 -> (halfL - t1 * v1) / v2 + t1
-        else ->    (halfL - t1 * v1 - t2 * v2) / v3 + t1 + t2
+        else -> (halfL - t1 * v1 - t2 * v2) / v3 + t1 + t2
     }
 }
 
@@ -77,9 +77,9 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
                        rookX1: Int, rookY1: Int,
                        rookX2: Int, rookY2: Int): Int {
 
-    if ((kingX == rookX1) || (kingY == rookY1))
-    if ((kingX == rookX2) || (kingY == rookY2))
-        return 3
+    if (kingX == rookX1 || kingY == rookY1)
+        if (kingX == rookX2 || kingY == rookY2)
+            return 3
     if (kingX == rookX1 || kingY == rookY1)
         return 1
     if (kingX == rookX2 || kingY == rookY2)
@@ -119,13 +119,13 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
  * Если такой треугольник не существует, вернуть -1.
  */
 fun triangleKind(a: Double, b: Double, c: Double): Int {
-    val maxL = max(max(a, b), c)
-    val minL = min(min(a, b), c)
+    val maxL = maxOf(a, b, c)
+    val minL = minOf(a, b, c)
     val mediumL = (a + b + c) - maxL - minL
     return when {
-       minL * minL + mediumL * mediumL == maxL * maxL ->  1
+        minL * minL + mediumL * mediumL == maxL * maxL -> 1
         minL * minL + mediumL * mediumL > maxL * maxL -> 0
-         minL  + mediumL  > maxL -> 2
+        minL + mediumL > maxL -> 2
         else -> -1
     }
 }

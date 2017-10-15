@@ -1,4 +1,5 @@
 @file:Suppress("UNUSED_PARAMETER")
+
 package lesson3.task1
 
 import lesson1.task1.sqr
@@ -37,7 +38,7 @@ fun isPrime(n: Int): Boolean {
  */
 fun isPerfect(n: Int): Boolean {
     var sum = 1
-    for (m in 2..n/2) {
+    for (m in 2..n / 2) {
         if (n % m > 0) continue
         sum += m
         if (sum > n) break
@@ -53,8 +54,8 @@ fun isPerfect(n: Int): Boolean {
 fun digitCountInNumber(n: Int, m: Int): Int =
         when {
             n == m -> 1
-             n < 10 -> 0
-              else -> digitCountInNumber(n / 10, m) + digitCountInNumber(n % 10, m)
+            n < 10 -> 0
+            else -> digitCountInNumber(n / 10, m) + digitCountInNumber(n % 10, m)
         }
 
 /**
@@ -66,12 +67,12 @@ fun digitCountInNumber(n: Int, m: Int): Int =
 fun digitNumber(n: Int): Int {
     var count = 1
     var num = n / 10
-    while(num > 0){
+    while (num > 0) {
         num = num / 10
-        count++}
+        count++
+    }
     return count
 }
-
 
 
 /**
@@ -104,7 +105,7 @@ fun fib(n: Int): Int {
  */
 fun lcm(m: Int, n: Int): Int {
     var k = 1
-    while (k % m > 0 || k % n > 0 ){
+    while (k % m > 0 || k % n > 0) {
         k++
     }
     return k
@@ -117,8 +118,8 @@ fun lcm(m: Int, n: Int): Int {
  */
 fun minDivisor(n: Int): Int {
     var k = 2
-    while (n % k > 0){
-        k ++
+    while (n % k > 0) {
+        k++
     }
     return k
 }
@@ -131,7 +132,7 @@ fun minDivisor(n: Int): Int {
  */
 fun maxDivisor(n: Int): Int {
     var k = n - 1
-    while (n % k > 0){
+    while (n % k > 0) {
         k--
     }
     return k
@@ -146,8 +147,8 @@ fun maxDivisor(n: Int): Int {
  */
 fun isCoPrime(m: Int, n: Int): Boolean {
     val k = min(n, m)
-    for (i in 2..k){
-        if (n % i == 0 && m % i ==0) return false
+    for (i in 2..k) {
+        if (n % i == 0 && m % i == 0) return false
     }
     return true
 }
@@ -161,7 +162,7 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  */
 fun squareBetweenExists(m: Int, n: Int): Boolean {
     for (i in 1..sqrt(n.toDouble()).toInt()) {
-        if (m <= i * i && n >= i * i)
+        if (i * i in m..n)
             return true
     }
     return false
@@ -181,13 +182,13 @@ fun sin(x: Double, eps: Double): Double {
     var n = 1
     var a = x
     while (a > 2 * PI)
-        a = a - 2 * PI
+        a -= 2 * PI
     while (true) {
         if (abs(y) < eps)
             return s
-        n = n + 2
+        n += 2
         y = -y * a * a / n / (n - 1)
-        s = s + y
+        s += y
     }
 }
 
@@ -205,15 +206,15 @@ fun cos(x: Double, eps: Double): Double {
     var n = 0.0
     var a = x
     while (a > 2 * PI)
-        a = a - 2 * PI
+        a -= 2 * PI
     while (a < 0)
-        a = a + 2 * PI
-    while (true){
+        a += 2 * PI
+    while (true) {
         if (abs(y) < eps)
             return s
-        n = n + 2
+        n += 2
         y = -y * a * a / n / (n - 1)
-        s = s + y
+        s += y
     }
 }
 
@@ -226,11 +227,10 @@ fun cos(x: Double, eps: Double): Double {
 fun revert(n: Int): Int {
     var m = n
     var result = 0
-    var a = 0
-    while (true){
-        a = m % 10
+    while (true) {
+        val a = m % 10
         result = result * 10 + a
-        m = m / 10
+        m /= 10
         if (m == 0) return result
     }
 }
@@ -245,14 +245,14 @@ fun revert(n: Int): Int {
 fun isPalindrome(n: Int): Boolean {
     var m = n
     var result = 0
-    var a = 0
     while (true) {
-        a = m % 10
+        val a = m % 10
         result = result * 10 + a
-        m = m / 10
+        m /= 10
         if (m == 0) return n == result
     }
 }
+
 /**
  * Средняя
  *
@@ -272,42 +272,39 @@ fun hasDifferentDigits(n: Int): Boolean = TODO()
 fun LengthOfNumber(x: Int): Int {
     var y = x
     var result = 1
-    while (true){
-       y = y / 10
+    while (true) {
+        y /= 10
         if (y == 0) {
             return result
         }
-      result = result + 1
+        result++
     }
 }
+
 fun FigureByPosition(t: Int, n: Int): Int {
-    var m = 0
+    var m = LengthOfNumber(t) - n + 1
     var x = t
-    m = LengthOfNumber(t) - n + 1
-    while(true){
+    while (true) {
         m--
-        if(m == 0){
-          return x % 10
-        }
-        else {
-          x = x / 10
+        if (m == 0) {
+            return x % 10
+        } else {
+            x = x / 10
         }
     }
 }
-fun squareSequenceDigit(n: Int):Int {
+
+fun squareSequenceDigit(n: Int): Int {
     var i = 1
-    var i_sqr = 0
-    var i_sqr_length = 0
     var m = n
-    while (true){
-        i_sqr = i * i
-        i_sqr_length = LengthOfNumber(i_sqr)
-        if(m > i_sqr_length ){
-          m = m - i_sqr_length
-          i++
-        }
-        else {
-           return FigureByPosition(i_sqr, m)
+    while (true) {
+        val iSqr = i * i
+        val iSqrLength = LengthOfNumber(iSqr)
+        if (m > iSqrLength) {
+            m -= iSqrLength
+            i++
+        } else {
+            return FigureByPosition(iSqr, m)
         }
     }
 
