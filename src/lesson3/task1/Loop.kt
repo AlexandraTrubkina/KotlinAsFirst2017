@@ -67,7 +67,7 @@ fun digitCountInNumber(n: Int, m: Int): Int =
 fun digitNumber(n: Int): Int {
     var count = 1
     var num = n / 10
-    while (num > 0) {
+    while (num > 0 || num < 0) {
         num = num / 10
         count++
     }
@@ -307,7 +307,6 @@ fun squareSequenceDigit(n: Int): Int {
             return FigureByPosition(iSqr, m)
         }
     }
-
 }
 
 
