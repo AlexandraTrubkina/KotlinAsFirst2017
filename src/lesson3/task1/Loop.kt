@@ -67,7 +67,7 @@ fun digitCountInNumber(n: Int, m: Int): Int =
 fun digitNumber(n: Int): Int {
     var count = 1
     var num = n / 10
-    while (num > 0 || num < 0) {
+    while (num != 0) {
         num = num / 10
         count++
     }
@@ -86,15 +86,14 @@ fun fib(n: Int): Int {
     var a2 = 1
     var a3 = 0
     if (n < 3) return 1
-    else {
-        for (i in 3..n) {
-            a3 = a1 + a2
-            a1 = a2
-            a2 = a3
-        }
-        return a3
+    for (i in 3..n) {
+        a3 = a1 + a2
+        a1 = a2
+        a2 = a3
     }
+    return a3
 }
+
 
 
 /**
@@ -104,9 +103,10 @@ fun fib(n: Int): Int {
  * минимальное число k, которое делится и на m и на n без остатка
  */
 fun lcm(m: Int, n: Int): Int {
-    var k = 1
+    var k = max(m, n)
+    val z = k
     while (k % m > 0 || k % n > 0) {
-        k++
+        k += z
     }
     return k
 }
@@ -161,7 +161,9 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
  */
 fun squareBetweenExists(m: Int, n: Int): Boolean {
-    for (i in 1..sqrt(n.toDouble()).toInt()) {
+    val minElement = max(0, sqrt(m.toDouble()).toInt() - 1)
+    val maxElement = sqrt(n.toDouble()).toInt() + 1
+    for (i in minElement..maxElement) {
         if (i * i in m..n)
             return true
     }
@@ -177,12 +179,14 @@ fun squareBetweenExists(m: Int, n: Int): Boolean {
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
 fun sin(x: Double, eps: Double): Double {
-    var y = x
-    var s = x
-    var n = 1
     var a = x
     while (a > 2 * PI)
         a -= 2 * PI
+    while (a < 0)
+        a += 2 * PI
+    var y = a
+    var s = a
+    var n = 1
     while (true) {
         if (abs(y) < eps)
             return s
@@ -227,12 +231,12 @@ fun cos(x: Double, eps: Double): Double {
 fun revert(n: Int): Int {
     var m = n
     var result = 0
-    while (true) {
+    while (m != 0) {
         val a = m % 10
         result = result * 10 + a
         m /= 10
-        if (m == 0) return result
     }
+    return result
 }
 
 /**
@@ -245,13 +249,14 @@ fun revert(n: Int): Int {
 fun isPalindrome(n: Int): Boolean {
     var m = n
     var result = 0
-    while (true) {
+    while (m != 0) {
         val a = m % 10
         result = result * 10 + a
         m /= 10
-        if (m == 0) return n == result
     }
+    return n == result
 }
+
 
 /**
  * Средняя
@@ -269,20 +274,10 @@ fun hasDifferentDigits(n: Int): Boolean = TODO()
  * Например, 2-я цифра равна 4, 7-я 5, 12-я 6.
  */
 
-fun LengthOfNumber(x: Int): Int {
-    var y = x
-    var result = 1
-    while (true) {
-        y /= 10
-        if (y == 0) {
-            return result
-        }
-        result++
-    }
-}
 
-fun FigureByPosition(t: Int, n: Int): Int {
-    var m = LengthOfNumber(t) - n + 1
+
+fun figureByPosition(t: Int, n: Int): Int {
+    var m = digitNumber(t) - n + 1
     var x = t
     while (true) {
         m--
@@ -299,12 +294,12 @@ fun squareSequenceDigit(n: Int): Int {
     var m = n
     while (true) {
         val iSqr = i * i
-        val iSqrLength = LengthOfNumber(iSqr)
+        val iSqrLength = digitNumber(iSqr)
         if (m > iSqrLength) {
             m -= iSqrLength
             i++
         } else {
-            return FigureByPosition(iSqr, m)
+            return figureByPosition(iSqr, m)
         }
     }
 }
