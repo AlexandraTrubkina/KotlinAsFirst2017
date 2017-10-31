@@ -2,6 +2,7 @@
 package lesson4.task1
 
 import lesson1.task1.discriminant
+import lesson1.task1.sqr
 import java.lang.Math.*
 
 /**
@@ -107,10 +108,9 @@ fun buildSumExample(list: List<Int>) = list.joinToString(separator = " + ", post
  * по формуле abs = sqrt(a1^2 + a2^2 + ... + aN^2).
  * Модуль пустого вектора считать равным 0.0.
  */
-fun abs(v: List<Double>): Double {
-    val t = v.map {it * it}
-    return sqrt(t.fold(0.0){previousResult, element -> previousResult + element})
-}
+fun abs(v: List<Double>): Double =
+        sqrt(v.map{it * it}.fold(0.0) { previousResult, element -> previousResult + element })
+
 
 /**
  * Простая
@@ -119,10 +119,10 @@ fun abs(v: List<Double>): Double {
  */
 fun mean(list: List<Double>): Double {
     val sum = list.fold(0.0) { previousResult, element -> previousResult + element }
-    if (sum > 0.0)
-    return sum / list.size
+    if (list.size > 0)
+        return sum / list.size
     else
-    return 0.0
+        return 0.0
 }
 
 /**
@@ -136,8 +136,8 @@ fun mean(list: List<Double>): Double {
 fun center(list: MutableList<Double>): MutableList<Double> {
     val sum = list.fold(0.0) { previousResult, element -> previousResult + element }
     val average = sum / list.size
-    for (i in 0 until list.size){
-    list [i] = list[i] - average
+    for (i in 0 until list.size) {
+        list[i] = list[i] - average
     }
     return list
 }
@@ -167,10 +167,9 @@ fun times(a: List<Double>, b: List<Double>): Double {
  */
 fun polynom(p: List<Double>, x: Double): Double {
     var sum = 0.0
-    var y = 0.0
     var t = 1.0
     for (i in 0 until p.size) {
-        y = p[i] * t
+        val y = p[i] * t
         t *= x
         sum += y
     }
@@ -225,21 +224,9 @@ fun factorize(n: Int): List<Int>{
  * Результат разложения вернуть в виде строки, например 75 -> 3*5*5
  */
 fun factorizeToString(n: Int): String {
-    var a = 2
-    var m = n
-    var result: List<Int>
-    result = listOf()
-    while (a <= m) {
-        if (m % a == 0) {
-            result = result + listOf(a)
-            m = m / a
-        } else {
-            a++
-        }
-    }
-    return result.joinToString(separator = "*" )
+    val result = factorize(n)
+    return result.joinToString(separator = "*")
 }
-
 
 /**
  * Средняя
@@ -261,12 +248,6 @@ fun convert(n: Int, base: Int): List<Int> {
     return result
 }
 
-
-
-
-
-
-
 /**
  * Сложная
  *
@@ -284,7 +265,16 @@ fun convertToString(n: Int, base: Int): String = TODO()
  * из системы счисления с основанием base в десятичную.
  * Например: digits = (1, 3, 12), base = 14 -> 250
  */
-fun decimal(digits: List<Int>, base: Int): Int = TODO()
+fun decimal(digits: List<Int>, base: Int): Int {
+    var c = 0
+    var sum = 0
+    for (i in digits.size downTo 0) {
+        c = digits[i] * pow(base.toDouble(), i.toDouble()).toInt()
+        sum += c
+    }
+    return sum
+}
+
 
 /**
  * Сложная

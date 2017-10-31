@@ -74,7 +74,6 @@ fun digitNumber(n: Int): Int {
     return count
 }
 
-
 /**
  * Простая
  *
@@ -93,8 +92,6 @@ fun fib(n: Int): Int {
     }
     return a3
 }
-
-
 
 /**
  * Простая
@@ -124,10 +121,9 @@ fun minDivisor(n: Int): Int {
     return k
 }
 
-
 /**
  * Простая
- *
+ *d
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
 fun maxDivisor(n: Int): Int {
@@ -170,7 +166,6 @@ fun squareBetweenExists(m: Int, n: Int): Boolean {
     return false
 }
 
-
 /**
  * Средняя
  *
@@ -195,7 +190,6 @@ fun sin(x: Double, eps: Double): Double {
         s += y
     }
 }
-
 
 /**
  * Средняя
@@ -247,16 +241,10 @@ fun revert(n: Int): Int {
  * 15751 -- палиндром, 3653 -- нет.
  */
 fun isPalindrome(n: Int): Boolean {
-    var m = n
-    var result = 0
-    while (m != 0) {
-        val a = m % 10
-        result = result * 10 + a
-        m /= 10
-    }
+    val m = n
+    val result = revert(m)
     return n == result
 }
-
 
 /**
  * Средняя
