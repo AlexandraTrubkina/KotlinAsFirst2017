@@ -239,12 +239,12 @@ fun convert(n: Int, base: Int): List<Int> {
     var result: List<Int>
     var y = n
     result = listOf()
-    while (y > 0 || y == 1 ) {
+    while (y > 0 || y == 1 || n == 0) {
         var m = n
         m = y % base
         y = y / base
         result = listOf(m) + result
-    }
+        }
     return result
 }
 
@@ -265,15 +265,8 @@ fun convertToString(n: Int, base: Int): String = TODO()
  * из системы счисления с основанием base в десятичную.
  * Например: digits = (1, 3, 12), base = 14 -> 250
  */
-fun decimal(digits: List<Int>, base: Int): Int {
-    var c = 0
-    var sum = 0
-    for (i in digits.size downTo 0) {
-        c = digits[i] * pow(base.toDouble(), i.toDouble()).toInt()
-        sum += c
-    }
-    return sum
-}
+fun decimal(digits: List<Int>, base: Int): Int = TODO()
+
 
 
 /**
@@ -298,7 +291,7 @@ fun decimalFromString(str: String, base: Int): Int = TODO()
 fun roman(n: Int): String = TODO()
 
 /**
- * Очень сложнаяs
+ * Очень сложная
  *
  * Записать заданное натуральное число 1..999999 прописью по-русски.
  * Например, 375 = "триста семьдесят пять",
