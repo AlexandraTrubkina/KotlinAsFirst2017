@@ -240,11 +240,9 @@ fun revert(n: Int): Int {
  * первая цифра равна последней, вторая -- предпоследней и так далее.
  * 15751 -- палиндром, 3653 -- нет.
  */
-fun isPalindrome(n: Int): Boolean {
-    val m = n
-    val result = revert(m)
-    return n == result
-}
+fun isPalindrome(n: Int): Boolean = n == revert(n)
+
+
 
 /**
  * Средняя

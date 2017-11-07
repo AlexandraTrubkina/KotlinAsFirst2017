@@ -134,8 +134,7 @@ fun mean(list: List<Double>): Double {
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
 fun center(list: MutableList<Double>): MutableList<Double> {
-    val sum = list.fold(0.0) { previousResult, element -> previousResult + element }
-    val average = sum / list.size
+    val average = mean(list)
     for (i in 0 until list.size) {
         list[i] = list[i] - average
     }
@@ -152,7 +151,7 @@ fun center(list: MutableList<Double>): MutableList<Double> {
 fun times(a: List<Double>, b: List<Double>): Double {
     var c = 0.0
     for (i in 0 until a.size) {
-        c = a[i] * b[i] + c
+        c += a[i] * b[i]
     }
     return c
 }
@@ -238,16 +237,16 @@ fun factorizeToString(n: Int): String {
 fun convert(n: Int, base: Int): List<Int> {
     var result: List<Int>
     var y = n
+    var m = n
     result = listOf()
-    while (y > 0 || y == 1 || n == 0) {
-        var m = n
+    if (y == 0) return listOf(0)
+    while (y > 0 || y == 1) {
         m = y % base
-        y = y / base
+        y /= base
         result = listOf(m) + result
-        }
-    return result
-}
-
+    }
+            return result
+    }
 /**
  * Сложная
  *
@@ -266,6 +265,7 @@ fun convertToString(n: Int, base: Int): String = TODO()
  * Например: digits = (1, 3, 12), base = 14 -> 250
  */
 fun decimal(digits: List<Int>, base: Int): Int = TODO()
+
 
 
 
