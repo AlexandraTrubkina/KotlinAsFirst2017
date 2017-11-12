@@ -125,7 +125,7 @@ fun dateStrToDigit(str: String): String {
         year = str.substring(j, i).toInt()
     }
     catch (e: Exception) {return ""}
-    return String.format("%02d.%02d.%04d", day, monthN, year)
+    return String.format("%02d.%02d", day, monthN) + "." + year.toString()
 }
 
 /**
