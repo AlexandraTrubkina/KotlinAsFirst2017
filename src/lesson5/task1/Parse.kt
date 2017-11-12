@@ -66,7 +66,67 @@ fun main(args: Array<String>) {
  * День и месяц всегда представлять двумя цифрами, например: 03.04.2011.
  * При неверном формате входной строки вернуть пустую строку
  */
-fun dateStrToDigit(str: String): String = TODO()
+fun dateStrToDigit(str: String): String {
+    var i = 0
+    while(i < str.length) {
+        if (str[i] < '0' || str[i] > '9')  break
+        i++
+    }
+    if (i == 0)
+        return ""
+    var day = 0
+    try {
+        day = str.substring(0, i).toInt()
+    }
+    catch (e: Exception) {return ""}
+    if (day > 31)
+        return ""
+    while(i < str.length) {
+        if (str[i] != ' ')  break
+        i++
+    }
+    var j = i
+    while(i < str.length) {
+        if (str[i] == ' ')  break
+        i++
+    }
+    if (i == j)
+        return ""
+    val monthS = str.substring(j, i)
+    var monthN = 0
+    when{
+        monthS == "января" -> monthN = 1
+        monthS == "февраля" -> monthN = 2
+        monthS == "марта" -> monthN = 3
+        monthS == "апреля" -> monthN = 4
+        monthS == "мая" -> monthN = 5
+        monthS == "июня" -> monthN = 6
+        monthS == "июля" -> monthN = 7
+        monthS == "августа" -> monthN = 8
+        monthS == "сентября" -> monthN = 9
+        monthS == "октября" -> monthN = 10
+        monthS == "ноября" -> monthN = 11
+        monthS == "декабря" -> monthN = 12
+        else -> return ""
+    }
+    while(i < str.length) {
+        if (str[i] != ' ')  break
+        i++
+    }
+    j = i
+    while(i < str.length) {
+        if (str[i] < '0' || str[i] > '9')  break
+        i++
+    }
+    if (i < str.length)
+        return ""
+    var year = 0
+    try {
+        year = str.substring(j, i).toInt()
+    }
+    catch (e: Exception) {return ""}
+    return String.format("%02d.%02d.%04d", day, monthN, year)
+}
 
 /**
  * Средняя
@@ -75,7 +135,77 @@ fun dateStrToDigit(str: String): String = TODO()
  * Перевести её в строковый формат вида "15 июля 2016".
  * При неверном формате входной строки вернуть пустую строку
  */
-fun dateDigitToStr(digital: String): String = TODO()
+fun dateDigitToStr(digital: String): String {
+    var i = 0
+    while (i < digital.length) {
+        if (digital[i] < '0' || digital[i] > '9') break
+        i++
+    }
+    if (i == 0)
+        return ""
+    var day = 0
+    try {
+        day = digital.substring(0, i).toInt()
+    } catch (e: Exception) {
+        return ""
+    }
+    if (day > 31)
+        return ""
+    if (digital[i] != '.')
+        return ""
+    i++
+    var j = i
+    while (i < digital.length) {
+        if (digital[i] < '0' || digital[i] > '9') break
+        i++
+    }
+    if (i == j)
+        return ""
+    var month = 0
+    try {
+        month = digital.substring(j, i).toInt()
+    } catch (e: Exception) {
+        return ""
+    }
+    if (month > 12)
+        return ""
+    if (digital[i] != '.')
+        return ""
+    i++
+    j = i
+    while (i < digital.length) {
+        if (digital[i] < '0' || digital[i] > '9') break
+        i++
+    }
+    if (i == j)
+        return ""
+    var year = 0
+    try {
+        year = digital.substring(j, i).toInt()
+    } catch (e: Exception) {
+        return ""
+    }
+    if(i < digital.length)
+        return ""
+    var res = ""
+    when{
+        month == 1 -> res = "января"
+        month == 2 -> res = "февраля"
+        month == 3 -> res = "марта"
+        month == 4 -> res = "апреля"
+        month == 5 -> res = "мая"
+        month == 6 -> res = "июня"
+        month == 7 -> res = "июля"
+        month == 8 -> res = "августа"
+        month == 9 -> res = "сентября"
+        month == 10 -> res = "октября"
+        month == 11 -> res = "ноября"
+        month == 12 -> res = "декабря"
+        else -> return ""
+    }
+    return  day.toString() + " " + res + " " + year.toString()
+}
+
 
 /**
  * Средняя
