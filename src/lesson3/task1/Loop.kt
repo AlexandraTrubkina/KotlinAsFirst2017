@@ -114,7 +114,7 @@ fun lcm(m: Int, n: Int): Int {
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
 fun minDivisor(n: Int): Int {
-    for (k in 2 .. sqrt(n.toDouble()).toInt() + 1){
+    for (k in 2 .. ceil(sqrt(n.toDouble())).toInt()){
         if (n % k == 0)
             return k
     }
@@ -127,11 +127,13 @@ fun minDivisor(n: Int): Int {
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
 fun maxDivisor(n: Int): Int {
-    var k = n - 1
-    while (n % k > 0) {
-        k--
+    var k = n -1
+    while (k >= ceil(sqrt(n.toDouble())).toInt()){
+        k --
+        if (n % k == 0)
+            return k
     }
-    return k
+    return 1
 }
 
 /**
@@ -173,22 +175,29 @@ fun squareBetweenExists(m: Int, n: Int): Boolean {
  * sin(x) = x - x^3 / 3! + x^5 / 5! - x^7 / 7! + ...
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
+fun calculate(y: Double, n :Int, s: Double, eps: Double, a: Double):Double {
+    var m = n
+    var s1 = s
+    var y1 = y
+    while(true){
+        if (abs(y1) < eps)
+            return s1
+        m += 2
+        y1 = -y1 * a * a / m / (m - 1)
+        s1 += y1
+    }
+}
+
 fun sin(x: Double, eps: Double): Double {
     var a = x
     while (a > 2 * PI)
         a -= 2 * PI
     while (a < 0)
         a += 2 * PI
-    var y = a
-    var s = a
-    var n = 1
-    while (true) {
-        if (abs(y) < eps)
-            return s
-        n += 2
-        y = -y * a * a / n / (n - 1)
-        s += y
-    }
+    val y = a
+    val s = a
+    val n = 1
+    return calculate(y, n, s, eps, a)
 }
 
 /**
@@ -199,21 +208,15 @@ fun sin(x: Double, eps: Double): Double {
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
 fun cos(x: Double, eps: Double): Double {
-    var y = 1.0
-    var s = 1.0
-    var n = 0.0
+    val y = 1.0
+    val s = 1.0
+    val n = 0
     var a = x
     while (a > 2 * PI)
         a -= 2 * PI
     while (a < 0)
         a += 2 * PI
-    while (true) {
-        if (abs(y) < eps)
-            return s
-        n += 2
-        y = -y * a * a / n / (n - 1)
-        s += y
-    }
+    return calculate(y, n, s, eps, a)
 }
 
 /**

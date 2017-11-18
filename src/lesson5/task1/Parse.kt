@@ -151,6 +151,8 @@ fun dateDigitToStr(digital: String): String {
     }
     if (day > 31)
         return ""
+    if (i >= digital.length)
+        return ""
     if (digital[i] != '.')
         return ""
     i++
@@ -168,6 +170,8 @@ fun dateDigitToStr(digital: String): String {
         return ""
     }
     if (month > 12)
+        return ""
+    if (i >= digital.length)
         return ""
     if (digital[i] != '.')
         return ""
