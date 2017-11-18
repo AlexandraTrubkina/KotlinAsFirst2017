@@ -223,7 +223,23 @@ fun dateDigitToStr(digital: String): String {
  * Все символы в номере, кроме цифр, пробелов и +-(), считать недопустимыми.
  * При неверном формате вернуть пустую строку
  */
-fun flattenPhoneNumber(phone: String): String = TODO()
+fun flattenPhoneNumber(phone: String): String {
+    var result = ""
+    for (i in 0 until phone.length) {
+        if (phone[i] == '-' || phone[i] == ' ' || phone[i] == '(' || phone[i] == ')')
+        else
+            if (phone[i] == '+')
+                if (result == "")
+                    result = "+"
+                else return ""
+            else
+                if (phone[i] in '0'..'9')
+                    result += phone[i].toString()
+                else return ""
+    }
+    return result
+}
+
 
 /**
  * Средняя
