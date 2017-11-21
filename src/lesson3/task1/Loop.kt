@@ -114,7 +114,7 @@ fun lcm(m: Int, n: Int): Int {
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
 fun minDivisor(n: Int): Int {
-    for (k in 2 .. ceil(sqrt(n.toDouble())).toInt()){
+    for (k in 2..ceil(sqrt(n.toDouble())).toInt()) {
         if (n % k == 0)
             return k
     }
@@ -127,9 +127,7 @@ fun minDivisor(n: Int): Int {
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
 fun maxDivisor(n: Int): Int {
-    var k = n -1
-    while (k >= ceil(sqrt(n.toDouble())).toInt()){
-        k --
+    for (k in n -1 downTo ceil(sqrt(n.toDouble())).toInt()) {
         if (n % k == 0)
             return k
     }
@@ -175,29 +173,25 @@ fun squareBetweenExists(m: Int, n: Int): Boolean {
  * sin(x) = x - x^3 / 3! + x^5 / 5! - x^7 / 7! + ...
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
-fun calculate(y: Double, n :Int, s: Double, eps: Double, a: Double):Double {
-    var m = n
-    var s1 = s
-    var y1 = y
-    while(true){
-        if (abs(y1) < eps)
-            return s1
-        m += 2
-        y1 = -y1 * a * a / m / (m - 1)
-        s1 += y1
-    }
-}
-
-fun sin(x: Double, eps: Double): Double {
+fun calculate(x: Double, n: Int, eps: Double): Double {
     var a = x
     while (a > 2 * PI)
         a -= 2 * PI
     while (a < 0)
         a += 2 * PI
-    val y = a
-    val s = a
-    val n = 1
-    return calculate(y, n, s, eps, a)
+    var m = n
+    var y1 = pow(a, n.toDouble())
+    var s1 = y1
+    while (abs(y1) > eps) {
+        m += 2
+        y1 = -y1 * a * a / m / (m - 1)
+        s1 += y1
+    }
+    return s1
+}
+
+fun sin(x: Double, eps: Double): Double {
+    return calculate(x, 1, eps)
 }
 
 /**
@@ -208,15 +202,7 @@ fun sin(x: Double, eps: Double): Double {
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
 fun cos(x: Double, eps: Double): Double {
-    val y = 1.0
-    val s = 1.0
-    val n = 0
-    var a = x
-    while (a > 2 * PI)
-        a -= 2 * PI
-    while (a < 0)
-        a += 2 * PI
-    return calculate(y, n, s, eps, a)
+    return calculate(x, 0, eps)
 }
 
 /**
