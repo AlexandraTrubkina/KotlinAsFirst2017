@@ -243,7 +243,7 @@ fun flattenPhoneNumber(phone: String): String {
 
 /**
  * Средняя
- *
+ *6
  * Результаты спортсмена на соревнованиях в прыжках в длину представлены строкой вида
  * "706 - % 717 % 703".
  * В строке могут присутствовать числа, черточки - и знаки процента %, разделённые пробелами;
@@ -255,7 +255,7 @@ fun bestLongJump(jumps: String): Int {
     val parts = jumps.split(" ")
     var result = - 1
     for (part in parts) {
-        if (part != "%" && part != "-")
+        if (part != "%" && part != "-" && part != "")
             try {
                 result = maxOf(result, part.toInt())
             } catch (e: Exception) {
@@ -283,6 +283,7 @@ fun bestHighJump(jumps: String): Int {
     var height = -1
     var result = -1
     for (part in parts) {
+        if (part != "")
         try {
             height = part.toInt()
         } catch (e: Exception) {
@@ -290,11 +291,8 @@ fun bestHighJump(jumps: String): Int {
                 if (part[i] == '+') {
                     result = maxOf(result, height)
                 } else
-                    if (part[i] == '-')
-                    else
-                        if (part[i] == '%')
-                            height = -1
-                        else return -1
+                    if (part[i] == '-' || part[i] == '%')
+                      else return -1
             }
         }
     }
