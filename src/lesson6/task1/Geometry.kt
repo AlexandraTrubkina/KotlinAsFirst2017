@@ -2,6 +2,7 @@
 package lesson6.task1
 
 import lesson1.task1.sqr
+import java.lang.Math.*
 
 /**
  * Точка на плоскости
@@ -72,16 +73,20 @@ data class Circle(val center: Point, val radius: Double) {
      * расстояние между их центрами минус сумма их радиусов.
      * Расстояние между пересекающимися окружностями считать равным 0.0.
      */
-    fun distance(other: Circle): Double = TODO()
+    fun distance(other: Circle): Double {
+        if (radius + other.radius <= sqrt(sqr(center.x - other.center.x) + sqr(center.y - other.center.y)) )
+            return sqrt(sqr(center.x - other.center.x) + sqr(center.y - other.center.y)) - (radius + other.radius)
+        else return  0.0
+    }
+
 
     /**
      * Тривиальная
      *
      * Вернуть true, если и только если окружность содержит данную точку НА себе или ВНУТРИ себя
      */
-    fun contains(p: Point): Boolean = TODO()
+    fun contains(p: Point): Boolean = sqr(center.x - p.x) + sqr(center.y - p.y) <= sqr(radius)
 }
-
 /**
  * Отрезок между двумя точками
  */
@@ -99,7 +104,23 @@ data class Segment(val begin: Point, val end: Point) {
  * Дано множество точек. Вернуть отрезок, соединяющий две наиболее удалённые из них.
  * Если в множестве менее двух точек, бросить IllegalArgumentException
  */
-fun diameter(vararg points: Point): Segment = TODO()
+fun diameter(vararg points: Point): Segment {
+    if (points.size < 2)
+        throw IllegalArgumentException("points")
+    var result = 0.0
+    var start = 0
+    var finish = 0
+    for (i in 0 until points.size - 1)
+        for (j in i + 1 until points.size) {
+            val distance = points[i].distance(points[j])
+            if (distance > result) {
+                result = distance
+                start = i
+                finish = j
+            }
+        }
+    return Segment(points[start], points[finish])
+}
 
 /**
  * Простая
@@ -107,7 +128,8 @@ fun diameter(vararg points: Point): Segment = TODO()
  * Построить окружность по её диаметру, заданному двумя точками
  * Центр её должен находиться посередине между точками, а радиус составлять половину расстояния между ними
  */
-fun circleByDiameter(diameter: Segment): Circle = TODO()
+fun circleByDiameter(diameter: Segment): Circle = Circle(Point((diameter.begin.x + diameter.end.x) / 2.0,(diameter.begin.y + diameter.end.y) / 2.0),diameter.begin.distance(diameter.end) / 2.0)
+
 
 /**
  * Прямая, заданная точкой point и углом наклона angle (в радианах) по отношению к оси X.
@@ -128,7 +150,7 @@ class Line private constructor(val b: Double, val angle: Double) {
      * Найти точку пересечения с другой линией.
      * Для этого необходимо составить и решить систему из двух уравнений (каждое для своей прямой)
      */
-    fun crossPoint(other: Line): Point = TODO()
+    fun crossPoint(other: Line): Point =  TODO()
 
     override fun equals(other: Any?) = other is Line && angle == other.angle && b == other.b
 
