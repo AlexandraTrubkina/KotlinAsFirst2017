@@ -225,6 +225,7 @@ fun dateDigitToStr(digital: String): String {
  */
 fun flattenPhoneNumber(phone: String): String {
     var result = ""
+    var ok = false
     for (i in 0 until phone.length) {
         if (phone[i] == '-' || phone[i] == ' ' || phone[i] == '(' || phone[i] == ')')
         else
@@ -233,11 +234,17 @@ fun flattenPhoneNumber(phone: String): String {
                     result = "+"
                 else return ""
             else
-                if (phone[i] in '0'..'9')
+                if (phone[i] in '0'..'9'){
                     result += phone[i].toString()
+                    ok = true
+                }
                 else return ""
     }
-    return result
+    if (ok) {
+        return result
+    }else{
+        return ""
+    }
 }
 
 
