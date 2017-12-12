@@ -442,11 +442,12 @@ var cellsParse = 0
 var countCmdParse = 0
 var limitParse = 0
 
-fun computeParse(level: Int, use: Boolean): Int {
+fun computeParse(level: Int, u: Boolean): Int {
     val firstIndex = indCmdParse
+    var use = u
     while (indCmdParse < commandsParse.length) {
         if (countCmdParse >= limitParse) {
-            return 1
+            use = false
         }
         when {
             commandsParse[indCmdParse] == '>' -> {
@@ -484,9 +485,7 @@ fun computeParse(level: Int, use: Boolean): Int {
                     countCmdParse++
                 }
                 indCmdParse++
-                if ( computeParse( level+1, use && resultParse[indResParse] != 0 ) == 1 ){
-                    return 1
-                }
+                computeParse( level+1, use && resultParse[indResParse] != 0 )
             }
             commandsParse[indCmdParse] == ']' -> {
                 if (use) {
@@ -525,6 +524,8 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
     cellsParse = cells
     countCmdParse = 0
     limitParse = limit
+    computeParse(0, false)
+    indCmdParse = 0
     computeParse(0, true)
     return resultParse
 }
