@@ -308,7 +308,51 @@ fun bestHighJump(jumps: String): Int {
  * Вернуть значение выражения (6 для примера).
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
-fun plusMinus(expression: String): Int = TODO()
+var parts = listOf("")
+fun missSpaces(j:Int):Int{
+    var i = j
+    while (i < parts.size && parts[i] == ""){
+        i++
+    }
+    return i
+}
+
+fun plusMinus(expression: String): Int {
+    parts = expression.split(" ")
+    var result = 0
+    var i = missSpaces(0)
+    try {
+        result = parts[i].toInt()
+        i++
+    } catch (e: Exception) {
+        throw IllegalArgumentException("expression")
+    }
+    i = missSpaces(i)
+    while (i < parts.size) {
+        if (parts[i] == "+") {
+            i++
+            i = missSpaces(i)
+            try {
+                result += parts[i].toInt()
+            } catch (e: Exception) {
+                throw IllegalArgumentException("expression")
+            }
+        } else
+            if (parts[i] == "-") {
+                i++
+                i = missSpaces(i)
+                try {
+                    result -= parts[i].toInt()
+                } catch (e: Exception) {
+                    throw IllegalArgumentException("expression")
+                }
+            } else
+                throw IllegalArgumentException("expression")
+        i++
+        i = missSpaces(i)
+    }
+    return result
+}
 
 /**
  * Сложная
@@ -383,4 +427,101 @@ fun fromRoman(roman: String): Int = TODO()
  * IllegalArgumentException должен бросаться даже если ошибочная команда не была достигнута в ходе выполнения.
  *
  */
-fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> = TODO()
+var resultParse = mutableListOf<Int>()
+var commandsParse = ""
+var indCmdParse = 0
+var indResParse = 0
+var cellsParse = 0
+var countCmdParse = 0
+var limitParse = 0
+
+fun computeParse(level: Int, use: Boolean): Int {
+    val firstIndex = indCmdParse
+    while (indCmdParse < commandsParse.length) {
+        if (countCmdParse >= limitParse) {
+            return 1
+        }
+        when {
+            commandsParse[indCmdParse] == '>' -> {
+                if (use) {
+                    countCmdParse++
+                    indResParse++
+                    if (indResParse >= cellsParse) {
+                        throw IllegalStateException("Out of cells range +")
+                    }
+                }
+            }
+            commandsParse[indCmdParse] == '<' -> {
+                if (use) {
+                    countCmdParse++
+                    indResParse--
+                    if (indResParse < 0) {
+                        throw IllegalStateException("Out of cells range -")
+                    }
+                }
+            }
+            commandsParse[indCmdParse] == '+' -> {
+                if (use) {
+                    countCmdParse++
+                    resultParse[indResParse]++
+                }
+            }
+            commandsParse[indCmdParse] == '-' -> {
+                if (use) {
+                    countCmdParse++
+                    resultParse[indResParse]--
+                }
+            }
+            commandsParse[indCmdParse] == '[' -> {
+                if (use) {
+                    countCmdParse++
+                }
+                indCmdParse++
+                if ( computeParse( level+1, use && resultParse[indResParse] != 0 ) == 1 ){
+                    return 1
+                }
+                if ( use ) {
+                    countCmdParse++
+                }
+            }
+            commandsParse[indCmdParse] == ']' -> {
+                if (use) {
+                    countCmdParse++
+                }
+                if (level == 0) {
+                    throw IllegalArgumentException("] found but no [ before")
+                }
+                if ( (! use) || resultParse[indResParse] == 0 ) {
+                    indCmdParse++
+                    return 0
+                } else {
+                    indCmdParse = firstIndex - 1
+                }
+            }
+            commandsParse[indCmdParse] == ' ' -> {
+                if (use) {
+                    countCmdParse++
+                }
+            }
+            else ->
+                throw IllegalArgumentException("Invalid symbol")
+        }
+        indCmdParse++
+    }
+    if (level > 0) {
+        throw IllegalArgumentException("Unclosed [")
+    }
+    return 0
+}
+
+fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
+    resultParse = Array<Int>(cells,{i -> 0}).toMutableList()
+    commandsParse = commands
+    indCmdParse = 0
+    indResParse = cells/2
+    cellsParse = cells
+    countCmdParse = 0
+    limitParse = limit
+    computeParse(0, true)
+    return resultParse
+}

@@ -248,9 +248,6 @@ fun hasDifferentDigits(n: Int): Boolean = TODO()
  * 149162536496481100121144...
  * Например, 2-я цифра равна 4, 7-я 5, 12-я 6.
  */
-
-
-
 fun figureByPosition(t: Int, n: Int): Int {
     var m = digitNumber(t) - n + 1
     var x = t
@@ -259,7 +256,7 @@ fun figureByPosition(t: Int, n: Int): Int {
         if (m == 0) {
             return x % 10
         } else {
-            x = x / 10
+            x /= 10
         }
     }
 }
@@ -269,17 +266,15 @@ fun squareSequenceDigit(n: Int): Int {
     var m = n
     while (true) {
         val iSqr = i * i
-        val iSqrLength = digitNumber(iSqr)
-        if (m > iSqrLength) {
-            m -= iSqrLength
+        val iSqrLenght = digitNumber(iSqr)
+        if (m > iSqrLenght) {
+            m -= iSqrLenght
             i++
         } else {
             return figureByPosition(iSqr, m)
         }
     }
 }
-
-
 /**
  * Сложная
  *
@@ -287,4 +282,18 @@ fun squareSequenceDigit(n: Int): Int {
  * 1123581321345589144...
  * Например, 2-я цифра равна 1, 9-я 2, 14-я 5.
  */
-fun fibSequenceDigit(n: Int): Int = TODO()
+fun fibSequenceDigit(n: Int): Int {
+    var i = 1
+    var m = n
+    while (true){
+        val iSum = fib(i)
+        val iSumLength = digitNumber(iSum)
+        if (m > iSumLength) {
+            m -= iSumLength
+            i++
+        } else {
+            return figureByPosition(iSum, m)
+        }
+    }
+}
+
