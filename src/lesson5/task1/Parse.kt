@@ -487,9 +487,6 @@ fun computeParse(level: Int, use: Boolean): Int {
                 if ( computeParse( level+1, use && resultParse[indResParse] != 0 ) == 1 ){
                     return 1
                 }
-                if ( use ) {
-                    countCmdParse++
-                }
             }
             commandsParse[indCmdParse] == ']' -> {
                 if (use) {
@@ -499,7 +496,6 @@ fun computeParse(level: Int, use: Boolean): Int {
                     throw IllegalArgumentException("] found but no [ before")
                 }
                 if ( (! use) || resultParse[indResParse] == 0 ) {
-                    indCmdParse++
                     return 0
                 } else {
                     indCmdParse = firstIndex - 1
