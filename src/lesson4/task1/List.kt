@@ -322,4 +322,210 @@ fun roman(n: Int): String = TODO()
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
-fun russian(n: Int): String = TODO()
+fun tens(n:Int): String {
+    val x = n / 10
+    when {
+        x == 2 -> return "двадцать"
+        x == 3 -> return "тридцать"
+        x == 4 -> return "сорок"
+        x == 5 -> return "пятьдесят"
+        x == 6 -> return "шестьдесят"
+        x == 7 -> return "семьдесят"
+        x == 8 -> return "восемьдесят"
+        else -> return "девяносто"
+    }
+}
+
+fun numLess100(n: Int, fem: Boolean): String{
+    when{
+        n == 0 ->  return "ноль"
+        n == 1 -> if(fem) return "одна"
+        else return "один"
+        n == 2 -> if(fem) return "две"
+        else return "два"
+        n == 3 ->return "три"
+        n == 4 ->return "четыре"
+        n == 5 ->return "пять"
+        n == 6 ->return "шесть"
+        n == 7 ->return "семь"
+        n == 8 ->return "восемь"
+        n == 9 ->return "девять"
+        n == 10 ->return "десять"
+        n == 11 ->return "одиннадцать"
+        n == 12 ->return "двенадцать"
+        n == 13 ->return "тринадцать"
+        n == 14 ->return "четырнадцать"
+        n == 15 ->return "пятнадцать"
+        n == 16 ->return "шестнадцать"
+        n == 17 ->return "семнадцать"
+        n == 18 ->return "восемнадцать"
+        n == 19 ->return "девятнадцать"
+        n % 10 == 0 -> return tens(n)
+        else -> return tens(n) + " " + numLess100(n % 10, fem)
+    }
+}
+
+fun hundreds(n: Int): String{
+    val x = n / 100
+    when{
+        x == 1 -> return "сто"
+        x == 2 -> return "двести"
+        x == 3 -> return "триста"
+        x == 4 -> return "четыреста"
+        x == 5 -> return "пятьсот"
+        x == 6 -> return "шестьсот"
+        x == 7 -> return "семьсот"
+        x == 8 -> return "восемьсот"
+        else -> return "девятьсот"
+    }
+}
+
+fun numLess1000(n: Int, fem: Boolean): String{
+    when{
+        n < 100 -> return numLess100(n, fem)
+        n % 100 == 0 -> return hundreds(n)
+        else -> return hundreds(n) + " " + numLess100(n - ((n / 100) * 100), fem)
+    }
+}
+
+fun thousand(n: Int): String{
+    var x = (n / 1000) % 100
+    when{
+        x == 0 -> return "тысяч"
+        x == 1 -> return "тысяча"
+        x in 2..4 -> return "тысячи"
+        x in 5..20 -> return "тысяч"
+        else -> {
+           x = x % 10
+            when{
+                x == 1 -> return "тысяча"
+                x in 2..4 -> return "тысячи"
+                else -> return "тысяч"
+            }
+        }
+    }
+}
+
+fun numLessMil(n: Int): String{
+    when{
+        n < 1000 -> return numLess1000(n, false)
+        n == 1000 -> return thousand(n)
+        n < 2000 -> return thousand(n) + " " + numLess1000(n % 1000, false)
+        n % 1000 == 0 -> return numLess1000(n / 1000, true) + " " + thousand(n)
+        else -> return numLess1000(n / 1000, true) + " " + thousand(n) + " " + numLess1000(n % 1000, false)
+    }
+}
+
+fun trill(i: Int, j: Int): String {
+    when {
+        i == 1 ->
+            when {
+                j == 1 -> return "миллионов"
+                j == 2 -> return "миллион"
+                else -> return "миллиона"
+            }
+        i == 2 ->
+            when {
+                j == 1 -> return "миллиардлов"
+                j == 2 -> return "миллиард"
+                else -> return "миллиарда"
+            }
+        i == 3 ->
+            when {
+                j == 1 -> return "триллионов"
+                j == 2 -> return "триллион"
+                else -> return "триллиона"
+            }
+        i == 4 ->
+            when {
+                j == 1 -> return "квадриллионов"
+                j == 2 -> return "квадриллион"
+                else -> return "квадриллиона"
+            }
+        i == 5 ->
+            when {
+                j == 1 -> return "квинтиллионов"
+                j == 2 -> return "квинтиллион"
+                else -> return "квинтиллиона"
+            }
+        i == 6 ->
+            when {
+                j == 1 -> return "секстиллионов"
+                j == 2 -> return "секстиллион"
+                else -> return "секстиллиона"
+            }
+        else ->
+            when {
+                j == 1 -> return "септиллионов"
+                j == 2 -> return "септиллион"
+                else -> return "септиллиона"
+            }
+    }
+}
+
+fun millions(m : Int, n : Int):String{
+    var x = m / 1000000
+    if (x > 100)
+        x = x % 100
+    when {
+        x == 0 -> return trill(n, 1)
+        x == 1 -> return trill(n, 2)
+        x in 2..4 -> return trill(n, 3)
+        x in 5..20 -> return trill(n, 1)
+        else -> {
+            x = x % 10
+            when{
+                x == 1 -> return trill(n, 2)
+                x in 2..4 -> return trill(n, 3)
+                else -> return trill(n, 1)
+            }
+        }
+    }
+}
+
+fun mlrd(x: Int, m: Int): String{
+    var a = x / 1000000000
+    var b = a * 1000000
+    var res = ""
+    if(b > 1000000000){
+        res = mlrd(b, m + 1)
+        a = a % 1000
+        b = a * 1000000
+    }
+    if (a > 0){
+        if (res != "")
+            res = res + " "
+        if (a > 1 || res != "")
+            res = res + numLess1000(a, false) + " " + millions(b, m)
+        else res = res + millions(b, m)
+    }
+    return res
+}
+
+fun numLessMax(x: Int, n:Int):String{
+    var a = 0
+    var res = ""
+    when{
+        x >= 1000000000 -> {
+            a = x % 1000000000
+            res = mlrd(x, n + 1)
+            if (a > 0)
+                res = res + " " + numLessMax(a, n)
+        }
+        x < 1000000 -> res = numLessMil(x)
+        x == 1000000 -> res = millions(x, n)
+        x < 2000000 -> res = millions(x, n) + " " + numLessMil(x % 1000000)
+        x < 1000000000 ->
+            if (x % 1000000 == 0)
+                res = numLessMil(x / 1000000) + " " + millions(x, n)
+            else res = numLessMil(x / 1000000) + " " + millions(x, n) + " " + numLessMil(x % 1000000)
+    }
+    return res
+}
+
+fun russian(n: Int): String {
+    if( n < 0)
+        return "минус " + numLessMax(-n, 1)
+    else
+        return numLessMax(n, 1)
+}
