@@ -21,7 +21,23 @@ data class Square(val column: Int, val row: Int) {
      * В нотации, колонки обозначаются латинскими буквами от a до h, а ряды -- цифрами от 1 до 8.
      * Для клетки не в пределах доски вернуть пустую строку
      */
-    fun notation(): String = TODO()
+    fun notation(): String {
+        var column2 = ""
+        if (column in 1..8 && row in 1..8) {
+            when {
+                column == 1 -> column2 = "a"
+                column == 2 -> column2 = "b"
+                column == 3 -> column2 = "c"
+                column == 4 -> column2 = "d"
+                column == 5 -> column2 = "e"
+                column == 6 -> column2 = "f"
+                column == 7 -> column2 = "g"
+                column == 8 -> column2 = "h"
+                else -> return ""
+            }
+            return column2 + row.toString()
+        } else return ""
+    }
 }
 
 /**
@@ -31,7 +47,33 @@ data class Square(val column: Int, val row: Int) {
  * В нотации, колонки обозначаются латинскими буквами от a до h, а ряды -- цифрами от 1 до 8.
  * Если нотация некорректна, бросить IllegalArgumentException
  */
-fun square(notation: String): Square = TODO()
+fun square(notation: String): Square {
+    var column1 = 0
+    var row1 = 0
+    when {
+        notation[1] == '1' -> row1 = 1
+        notation[1] == '2' -> row1 = 2
+        notation[1] == '3' -> row1 = 3
+        notation[1] == '4' -> row1 = 4
+        notation[1] == '5' -> row1 = 5
+        notation[1] == '6' -> row1 = 6
+        notation[1] == '7' -> row1 = 7
+        notation[1] == '8' -> row1 = 8
+        else -> throw IllegalArgumentException("Invalid symbol")
+    }
+    when {
+        notation[0] == 'a' -> column1 = 1
+        notation[0] == 'b' -> column1 = 2
+        notation[0] == 'c' -> column1 = 3
+        notation[0] == 'd' -> column1 = 4
+        notation[0] == 'e' -> column1 = 5
+        notation[0] == 'f' -> column1 = 6
+        notation[0] == 'g' -> column1 = 7
+        notation[0] == 'h' -> column1 = 8
+        else -> throw IllegalArgumentException("Invalid symbol")
+    }
+    return Square(column1, row1)
+}
 
 /**
  * Простая
@@ -56,7 +98,16 @@ fun square(notation: String): Square = TODO()
  * Пример: rookMoveNumber(Square(3, 1), Square(6, 3)) = 2
  * Ладья может пройти через клетку (3, 3) или через клетку (6, 1) к клетке (6, 3).
  */
-fun rookMoveNumber(start: Square, end: Square): Int = TODO()
+fun rookMoveNumber(start: Square, end: Square): Int {
+    if ((start.column > 8 && start.row  < 1) || (end.column > 8 && end.row < 1))
+        throw IllegalArgumentException("Invalid symbol")
+    else
+    when{
+        start.row == end.row && start.column == end.column -> return 0
+        start.row == end.row || start.column == end.column -> return 1
+        else -> return 2
+    }
+}
 
 /**
  * Средняя
@@ -73,6 +124,8 @@ fun rookMoveNumber(start: Square, end: Square): Int = TODO()
  * Если возможно несколько вариантов самой быстрой траектории, вернуть любой из них.
  */
 fun rookTrajectory(start: Square, end: Square): List<Square> = TODO()
+
+
 
 /**
  * Простая
