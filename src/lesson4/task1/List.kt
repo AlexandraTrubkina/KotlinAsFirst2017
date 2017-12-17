@@ -237,7 +237,6 @@ fun convert(n: Int, base: Int): List<Int> {
     var result = listOf<Int>()
     var y = n
     var m = n
-    result = listOf()
     if (y == 0) return listOf(0)
     while (y > 0 || y == 1) {
         m = y % base
@@ -256,9 +255,9 @@ fun convert(n: Int, base: Int): List<Int> {
  */
 fun numberToChar(n: Int): Char {
     if (n < 10)
-        return (48 + n).toChar()
+        return '0' + n
     else
-        return (87 + n).toChar()
+        return 'W' + n
 }
 fun convertToString(n: Int, base: Int): String {
     val l = convert(n, base)
@@ -292,10 +291,9 @@ fun decimal(digits: List<Int>, base: Int): Int {
  * Например: str = "13c", base = 14 -> 250
  */
 fun charToNumber(n: Char): Int{
-    val m = n.toInt()
     if (n in '0'..'9')
-        return m - 48
-    else return m - 87
+        return n - '0'
+    else return n - 'W'
 }
 fun decimalFromString(str: String, base: Int): Int {
     var result = 0
