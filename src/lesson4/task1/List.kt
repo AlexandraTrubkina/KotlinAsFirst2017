@@ -204,8 +204,7 @@ fun accumulate(list: MutableList<Double>): MutableList<Double> {
 fun factorize(n: Int): List<Int>{
     var a = 2
     var m = n
-    var result : List<Int>
-    result = listOf()
+    var result = listOf<Int>()
     while (a <= m ) {
         if (m % a == 0) {
             result = result + a
@@ -235,7 +234,7 @@ fun factorizeToString(n: Int): String {
  * например: n = 100, base = 4 -> (1, 2, 1, 0) или n = 250, base = 14 -> (1, 3, 12)
  */
 fun convert(n: Int, base: Int): List<Int> {
-    var result: List<Int>
+    var result = listOf<Int>()
     var y = n
     var m = n
     result = listOf()
@@ -263,10 +262,10 @@ fun numberToChar(n: Int): Char {
 }
 fun convertToString(n: Int, base: Int): String {
     val l = convert(n, base)
-    var result = ""
+    val result = StringBuilder()
     for (i in 0 until l.size )
-        result += numberToChar(l[i])
-    return result
+        result.append(numberToChar(l[i]))
+    return result.toString()
 }
 
 /**
@@ -294,7 +293,7 @@ fun decimal(digits: List<Int>, base: Int): Int {
  */
 fun charToNumber(n: Char): Int{
     val m = n.toInt()
-    if (m in 48 .. 57)
+    if (n in '0'..'9')
         return m - 48
     else return m - 87
 }

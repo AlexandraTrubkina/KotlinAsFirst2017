@@ -99,7 +99,7 @@ fun square(notation: String): Square {
  * Ладья может пройти через клетку (3, 3) или через клетку (6, 1) к клетке (6, 3).
  */
 fun rookMoveNumber(start: Square, end: Square): Int {
-    if ((start.column > 8 && start.row  < 1) || (end.column > 8 && end.row < 1))
+    if ((start.column > 8 || start.row  < 1) || (end.column > 8 || end.row < 1))
         throw IllegalArgumentException("Invalid symbol")
     else
     when{
@@ -123,7 +123,20 @@ fun rookMoveNumber(start: Square, end: Square): Int {
  *          rookTrajectory(Square(3, 5), Square(8, 5)) = listOf(Square(3, 5), Square(8, 5))
  * Если возможно несколько вариантов самой быстрой траектории, вернуть любой из них.
  */
-fun rookTrajectory(start: Square, end: Square): List<Square> = TODO()
+fun rookTrajectory(start: Square, end: Square): List<Square> {
+    var result = listOf<Square>()
+    if (end.column == start.column)
+        if (end.row == start.row)
+            result = listOf(Square(start.column, start.row))
+        else
+            result = listOf(Square(start.column, start.row)) + listOf(Square(end.column, end.row))
+    else
+        if (end.row == start.row)
+            result = listOf(Square(start.column, start.row)) + listOf(Square(end.column, end.row))
+        else
+            result = listOf(Square(start.column, start.row)) + listOf(Square(start.column, end.row)) + listOf(Square(end.column, end.row))
+    return result
+}
 
 
 
@@ -171,7 +184,6 @@ fun bishopMoveNumber(start: Square, end: Square): Int = TODO()
  * Если возможно несколько вариантов самой быстрой траектории, вернуть любой из них.
  */
 fun bishopTrajectory(start: Square, end: Square): List<Square> = TODO()
-
 /**
  * Средняя
  *

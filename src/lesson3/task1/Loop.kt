@@ -249,31 +249,30 @@ fun hasDifferentDigits(n: Int): Boolean = TODO()
  * Например, 2-я цифра равна 4, 7-я 5, 12-я 6.
  */
 fun figureByPosition(t: Int, n: Int): Int {
-    var m = digitNumber(t) - n + 1
+    val dn = digitNumber(t)
+    var m = dn - n + 1
     var x = t
-    while (true) {
+    for (i in 1..dn) {
         m--
-        if (m == 0) {
-            return x % 10
-        } else {
+        if (m == 0) break
+        else
             x /= 10
-        }
     }
+    return x % 10
 }
 
 fun squareSequenceDigit(n: Int): Int {
     var i = 1
     var m = n
-    while (true) {
-        val iSqr = i * i
-        val iSqrLenght = digitNumber(iSqr)
-        if (m > iSqrLenght) {
-            m -= iSqrLenght
-            i++
-        } else {
-            return figureByPosition(iSqr, m)
+    var iSqr = 1
+    var iSqrLenght = digitNumber(iSqr)
+    while (m > iSqrLenght) {
+         m -= iSqrLenght
+         i++
+         iSqr = i * i
+         iSqrLenght = digitNumber(iSqr)
         }
-    }
+            return figureByPosition(iSqr, m)
 }
 /**
  * Сложная
@@ -285,15 +284,14 @@ fun squareSequenceDigit(n: Int): Int {
 fun fibSequenceDigit(n: Int): Int {
     var i = 1
     var m = n
-    while (true){
-        val iSum = fib(i)
-        val iSumLength = digitNumber(iSum)
-        if (m > iSumLength) {
-            m -= iSumLength
-            i++
-        } else {
-            return figureByPosition(iSum, m)
-        }
+    var iSum = 1
+    var iSumLength = digitNumber(iSum)
+    while (m > iSumLength){
+        m -= iSumLength
+        i++
+        iSum = fib(i)
+        iSumLength = digitNumber(iSum)
     }
+            return figureByPosition(iSum, m)
 }
 
