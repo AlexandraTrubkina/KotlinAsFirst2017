@@ -67,65 +67,49 @@ fun main(args: Array<String>) {
  * При неверном формате входной строки вернуть пустую строку
  */
 fun dateStrToDigit(str: String): String {
-    var i = 0
-    while(i < str.length) {
-        if (str[i] < '0' || str[i] > '9')  break
-        i++
-    }
-    if (i == 0)
-        return ""
-    var day = 0
-    try {
-        day = str.substring(0, i).toInt()
-    }
-    catch (e: Exception) {return ""}
-    if (day > 31)
-        return ""
-    while(i < str.length) {
-        if (str[i] != ' ')  break
-        i++
-    }
-    var j = i
-    while(i < str.length) {
-        if (str[i] == ' ')  break
-        i++
-    }
-    if (i == j)
-        return ""
-    val monthS = str.substring(j, i)
+    val parts = str.split(" ")
     var monthN = 0
-    when{
-        monthS == "января" -> monthN = 1
-        monthS == "февраля" -> monthN = 2
-        monthS == "марта" -> monthN = 3
-        monthS == "апреля" -> monthN = 4
-        monthS == "мая" -> monthN = 5
-        monthS == "июня" -> monthN = 6
-        monthS == "июля" -> monthN = 7
-        monthS == "августа" -> monthN = 8
-        monthS == "сентября" -> monthN = 9
-        monthS == "октября" -> monthN = 10
-        monthS == "ноября" -> monthN = 11
-        monthS == "декабря" -> monthN = 12
-        else -> return ""
-    }
-    while(i < str.length) {
-        if (str[i] != ' ')  break
-        i++
-    }
-    j = i
-    while(i < str.length) {
-        if (str[i] < '0' || str[i] > '9')  break
-        i++
-    }
-    if (i < str.length)
-        return ""
-    var year = 0
-    try {
-        year = str.substring(j, i).toInt()
-    }
-    catch (e: Exception) {return ""}
-    return String.format("%02d.%02d", day, monthN) + "." + year.toString()
+    var dayN = 0
+    var year = ""
+    var n = 0
+    for (part in parts)
+        if (part != "")
+            when {
+                n == 0 -> {
+                    try {
+                        dayN = part.toInt()
+                    } catch (e: Exception) {
+                        return ""
+                    }
+                    if (dayN > 31 || dayN < 1) return ""
+                    n++
+                }
+                n == 1 -> {
+                    when {
+                        part == "января" -> monthN = 1
+                        part == "февраля" -> monthN = 2
+                        part == "марта" -> monthN = 3
+                        part == "апреля" -> monthN = 4
+                        part == "мая" -> monthN = 5
+                        part == "июня" -> monthN = 6
+                        part == "июля" -> monthN = 7
+                        part == "августа" -> monthN = 8
+                        part == "сентября" -> monthN = 9
+                        part == "октября" -> monthN = 10
+                        part == "ноября" -> monthN = 11
+                        part == "декабря" -> monthN = 12
+                        else -> return ""
+                    }
+                    n++
+                }
+                n == 2 -> {
+                    year = part
+                    n++
+                }
+                else -> return ""
+            }
+    if (n < 2) return ""
+    return String.format("%02d.%02d", dayN, monthN) + "." + year
 }
 
 /**
@@ -136,78 +120,31 @@ fun dateStrToDigit(str: String): String {
  * При неверном формате входной строки вернуть пустую строку
  */
 fun dateDigitToStr(digital: String): String {
-    var i = 0
-    while (i < digital.length) {
-        if (digital[i] < '0' || digital[i] > '9') break
-        i++
-    }
-    if (i == 0)
+    val parts = digital.split(".")
+    if (parts.size != 3)
         return ""
-    var day = 0
-    try {
-        day = digital.substring(0, i).toInt()
-    } catch (e: Exception) {
+    if (parts[0] > "31")
         return ""
-    }
-    if (day > 31)
+    if (parts[1] > "12")
         return ""
-    if (i >= digital.length)
-        return ""
-    if (digital[i] != '.')
-        return ""
-    i++
-    var j = i
-    while (i < digital.length) {
-        if (digital[i] < '0' || digital[i] > '9') break
-        i++
-    }
-    if (i == j)
-        return ""
-    var month = 0
-    try {
-        month = digital.substring(j, i).toInt()
-    } catch (e: Exception) {
-        return ""
-    }
-    if (month > 12)
-        return ""
-    if (i >= digital.length)
-        return ""
-    if (digital[i] != '.')
-        return ""
-    i++
-    j = i
-    while (i < digital.length) {
-        if (digital[i] < '0' || digital[i] > '9') break
-        i++
-    }
-    if (i == j)
-        return ""
-    var year = 0
-    try {
-        year = digital.substring(j, i).toInt()
-    } catch (e: Exception) {
-        return ""
-    }
-    if(i < digital.length)
-        return ""
+    val month = parts[1]
     var res = ""
     when{
-        month == 1 -> res = "января"
-        month == 2 -> res = "февраля"
-        month == 3 -> res = "марта"
-        month == 4 -> res = "апреля"
-        month == 5 -> res = "мая"
-        month == 6 -> res = "июня"
-        month == 7 -> res = "июля"
-        month == 8 -> res = "августа"
-        month == 9 -> res = "сентября"
-        month == 10 -> res = "октября"
-        month == 11 -> res = "ноября"
-        month == 12 -> res = "декабря"
+        month == "01" -> res = "января"
+        month == "02" -> res = "февраля"
+        month == "03" -> res = "марта"
+        month == "04" -> res = "апреля"
+        month == "05" -> res = "мая"
+        month == "06" -> res = "июня"
+        month == "07" -> res = "июля"
+        month == "08" -> res = "августа"
+        month == "09" -> res = "сентября"
+        month == "10" -> res = "октября"
+        month == "11" -> res = "ноября"
+        month == "12" -> res = "декабря"
         else -> return ""
     }
-    return  day.toString() + " " + res + " " + year.toString()
+    return  String.format("%d", parts[0].toInt()) + " " + res + " " + parts[2]
 }
 
 
@@ -332,7 +269,7 @@ fun plusMinus(expression: String): Int {
         result = parts[i].toInt()
         i++
     } catch (e: Exception) {
-        throw IllegalArgumentException("expression")
+        throw IllegalArgumentException("Invalid symbol")
     }
     i = missSpaces(i)
     while (i < parts.size) {
@@ -342,7 +279,7 @@ fun plusMinus(expression: String): Int {
             try {
                 result += parts[i].toInt()
             } catch (e: Exception) {
-                throw IllegalArgumentException("expression")
+                throw IllegalArgumentException("Invalid symbol")
             }
         } else
             if (parts[i] == "-") {
@@ -351,10 +288,10 @@ fun plusMinus(expression: String): Int {
                 try {
                     result -= parts[i].toInt()
                 } catch (e: Exception) {
-                    throw IllegalArgumentException("expression")
+                    throw IllegalArgumentException("Invalid symbol")
                 }
             } else
-                throw IllegalArgumentException("expression")
+                throw IllegalArgumentException("Invalid symbol")
         i++
         i = missSpaces(i)
     }
