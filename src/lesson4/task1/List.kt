@@ -202,14 +202,15 @@ fun accumulate(list: MutableList<Double>): MutableList<Double> {
  * Множители в списке должны располагаться по возрастанию.
  */
 fun factorize(n: Int): List<Int>{
-    var a = 2
     var m = n
     var result = listOf<Int>()
-    while (a <= m ) {
+    var a = 2
+    while (m >= a){
         if (m % a == 0) {
             result = result + a
             m = m / a
-        } else {
+        }
+        else {
             a++
         }
     }
@@ -293,7 +294,8 @@ fun decimal(digits: List<Int>, base: Int): Int {
 fun charToNumber(n: Char): Int{
     if (n in '0'..'9')
         return n - '0'
-    else return n - 'W'
+    else
+        return n - 'W'
 }
 fun decimalFromString(str: String, base: Int): Int {
     var result = 0

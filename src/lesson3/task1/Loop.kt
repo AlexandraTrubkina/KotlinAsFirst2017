@@ -255,8 +255,7 @@ fun figureByPosition(t: Int, n: Int): Int {
     for (i in 1..dn) {
         m--
         if (m == 0) break
-        else
-            x /= 10
+        else x /= 10
     }
     return x % 10
 }
@@ -267,12 +266,12 @@ fun squareSequenceDigit(n: Int): Int {
     var iSqr = 1
     var iSqrLenght = digitNumber(iSqr)
     while (m > iSqrLenght) {
-         m -= iSqrLenght
-         i++
-         iSqr = i * i
-         iSqrLenght = digitNumber(iSqr)
-        }
-            return figureByPosition(iSqr, m)
+        m -= iSqrLenght
+        i++
+        iSqr = i * i
+        iSqrLenght = digitNumber(iSqr)
+    }
+    return figureByPosition(iSqr, m)
 }
 /**
  * Сложная
@@ -286,12 +285,12 @@ fun fibSequenceDigit(n: Int): Int {
     var m = n
     var iSum = 1
     var iSumLength = digitNumber(iSum)
-    while (m > iSumLength){
+    while (m > iSumLength) {
         m -= iSumLength
         i++
         iSum = fib(i)
         iSumLength = digitNumber(iSum)
     }
-            return figureByPosition(iSum, m)
+    return figureByPosition(iSum, m)
 }
 
