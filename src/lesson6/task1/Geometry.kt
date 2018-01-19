@@ -74,9 +74,12 @@ data class Circle(val center: Point, val radius: Double) {
      * Расстояние между пересекающимися окружностями считать равным 0.0.
      */
     fun distance(other: Circle): Double {
-        if (radius + other.radius <= sqrt(sqr(center.x - other.center.x) + sqr(center.y - other.center.y)) )
-            return sqrt(sqr(center.x - other.center.x) + sqr(center.y - other.center.y)) - (radius + other.radius)
-        else return  0.0
+        val betweenCx = center.x - other.center.x
+        val betweenCy = center.y - other.center.y
+        if (radius + other.radius <= sqrt(sqr(betweenCx) + sqr(betweenCy)) )
+            return sqrt(sqr(betweenCx) + sqr(betweenCy)) - (radius + other.radius)
+        else
+            return  0.0
     }
 
 
@@ -106,7 +109,7 @@ data class Segment(val begin: Point, val end: Point) {
  */
 fun diameter(vararg points: Point): Segment {
     if (points.size < 2)
-        throw IllegalArgumentException("points")
+        throw IllegalArgumentException("not enough points")
     var result = 0.0
     var start = 0
     var finish = 0
@@ -128,7 +131,8 @@ fun diameter(vararg points: Point): Segment {
  * Построить окружность по её диаметру, заданному двумя точками
  * Центр её должен находиться посередине между точками, а радиус составлять половину расстояния между ними
  */
-fun circleByDiameter(diameter: Segment): Circle = Circle(Point((diameter.begin.x + diameter.end.x) / 2.0,(diameter.begin.y + diameter.end.y) / 2.0),diameter.begin.distance(diameter.end) / 2.0)
+fun circleByDiameter(diameter: Segment): Circle =
+        Circle(Point((diameter.begin.x + diameter.end.x) / 2.0, (diameter.begin.y + diameter.end.y) / 2.0), diameter.begin.distance(diameter.end) / 2.0)
 
 
 /**
@@ -150,7 +154,7 @@ class Line private constructor(val b: Double, val angle: Double) {
      * Найти точку пересечения с другой линией.
      * Для этого необходимо составить и решить систему из двух уравнений (каждое для своей прямой)
      */
-    fun crossPoint(other: Line): Point =  TODO()
+    fun crossPoint(other: Line): Point = TODO()
 
     override fun equals(other: Any?) = other is Line && angle == other.angle && b == other.b
 
