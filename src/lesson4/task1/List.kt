@@ -415,110 +415,11 @@ fun numLessMil(n: Int): String{
     }
 }
 
-fun trill(i: Int, j: Int): String {
-    when {
-        i == 1 ->
-            when {
-                j == 1 -> return "миллионов"
-                j == 2 -> return "миллион"
-                else -> return "миллиона"
-            }
-        i == 2 ->
-            when {
-                j == 1 -> return "миллиардлов"
-                j == 2 -> return "миллиард"
-                else -> return "миллиарда"
-            }
-        i == 3 ->
-            when {
-                j == 1 -> return "триллионов"
-                j == 2 -> return "триллион"
-                else -> return "триллиона"
-            }
-        i == 4 ->
-            when {
-                j == 1 -> return "квадриллионов"
-                j == 2 -> return "квадриллион"
-                else -> return "квадриллиона"
-            }
-        i == 5 ->
-            when {
-                j == 1 -> return "квинтиллионов"
-                j == 2 -> return "квинтиллион"
-                else -> return "квинтиллиона"
-            }
-        i == 6 ->
-            when {
-                j == 1 -> return "секстиллионов"
-                j == 2 -> return "секстиллион"
-                else -> return "секстиллиона"
-            }
-        else ->
-            when {
-                j == 1 -> return "септиллионов"
-                j == 2 -> return "септиллион"
-                else -> return "септиллиона"
-            }
-    }
-}
-
-fun millions(m : Int, n : Int):String{
-    var x = m / 1000000
-    if (x > 100)
-        x = x % 100
-    when {
-        x == 0 -> return trill(n, 1)
-        x == 1 -> return trill(n, 2)
-        x in 2..4 -> return trill(n, 3)
-        x in 5..20 -> return trill(n, 1)
-        else -> {
-            x = x % 10
-            when{
-                x == 1 -> return trill(n, 2)
-                x in 2..4 -> return trill(n, 3)
-                else -> return trill(n, 1)
-            }
-        }
-    }
-}
-
-fun mlrd(x: Int, m: Int): String{
-    var a = x / 1000000000
-    var b = a * 1000000
-    var res = ""
-    if(b > 1000000000){
-        res = mlrd(b, m + 1)
-        a = a % 1000
-        b = a * 1000000
-    }
-    if (a > 0){
-        if (res != "")
-            res = res + " "
-        if (a > 1 || res != "")
-            res = res + numLess1000(a, false) + " " + millions(b, m)
-        else res = res + millions(b, m)
-    }
-    return res
-}
-
 fun numLessMax(x: Int, n:Int):String{
     var a = 0
     var res = ""
-    when{
-        x >= 1000000000 -> {
-            a = x % 1000000000
-            res = mlrd(x, n + 1)
-            if (a > 0)
-                res = res + " " + numLessMax(a, n)
-        }
-        x < 1000000 -> res = numLessMil(x)
-        x == 1000000 -> res = millions(x, n)
-        x < 2000000 -> res = millions(x, n) + " " + numLessMil(x % 1000000)
-        x < 1000000000 ->
-            if (x % 1000000 == 0)
-                res = numLessMil(x / 1000000) + " " + millions(x, n)
-            else res = numLessMil(x / 1000000) + " " + millions(x, n) + " " + numLessMil(x % 1000000)
-    }
+        if(x < 1000000)
+            res = numLessMil(x)
     return res
 }
 
