@@ -203,11 +203,11 @@ fun accumulate(list: MutableList<Double>): MutableList<Double> {
  */
 fun factorize(n: Int): List<Int>{
     var m = n
-    var result = listOf<Int>()
+    val result = mutableListOf<Int>()
     var a = 2
     while (m >= a){
         if (m % a == 0) {
-            result = result + a
+            result.add(a)
             m = m / a
         }
         else {

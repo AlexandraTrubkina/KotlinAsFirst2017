@@ -377,16 +377,18 @@ var cellsParse = 0
 var countCmdParse = 0
 var limitParse = 0
 
-fun computeParse(level: Int, u: Boolean): Int {
-    val firstIndex = indCmdParse
+fun computeParse( u:Boolean ): Int {
+    var level = -1
     var use = u
+    val firstIndex = mutableListOf<Int>()
+    val useLst = mutableListOf<Boolean>()
     while (indCmdParse < commandsParse.length) {
         if (countCmdParse >= limitParse) {
             use = false
         }
         when {
             commandsParse[indCmdParse] == '>' -> {
-                if (use) {
+                if ( use ) {
                     countCmdParse++
                     indResParse++
                     if (indResParse >= cellsParse) {
@@ -395,7 +397,7 @@ fun computeParse(level: Int, u: Boolean): Int {
                 }
             }
             commandsParse[indCmdParse] == '<' -> {
-                if (use) {
+                if ( use ) {
                     countCmdParse++
                     indResParse--
                     if (indResParse < 0) {
@@ -404,39 +406,44 @@ fun computeParse(level: Int, u: Boolean): Int {
                 }
             }
             commandsParse[indCmdParse] == '+' -> {
-                if (use) {
+                if ( use ) {
                     countCmdParse++
                     resultParse[indResParse]++
                 }
             }
             commandsParse[indCmdParse] == '-' -> {
-                if (use) {
+                if ( use ) {
                     countCmdParse++
                     resultParse[indResParse]--
                 }
             }
             commandsParse[indCmdParse] == '[' -> {
-                if (use) {
+                if ( use ) {
                     countCmdParse++
                 }
-                indCmdParse++
-                computeParse( level+1, use && resultParse[indResParse] != 0 )
+                level++
+                useLst.add(use)
+                firstIndex.add(indCmdParse)
+                use = use and (resultParse[indResParse] != 0)
             }
             commandsParse[indCmdParse] == ']' -> {
-                if (use) {
+                if ( use ) {
                     countCmdParse++
                 }
-                if (level == 0) {
+                if (level == -1) {
                     throw IllegalArgumentException("] found but no [ before")
                 }
                 if ( (! use) || resultParse[indResParse] == 0 ) {
-                    return 0
+                    use = useLst[level]
+                    useLst.removeAt(level)
+                    firstIndex.removeAt(level)
+                    level--
                 } else {
-                    indCmdParse = firstIndex - 1
+                    indCmdParse = firstIndex[level]
                 }
             }
             commandsParse[indCmdParse] == ' ' -> {
-                if (use) {
+                if ( use ) {
                     countCmdParse++
                 }
             }
@@ -459,8 +466,8 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
     cellsParse = cells
     countCmdParse = 0
     limitParse = limit
-    computeParse(0, false)
+    computeParse(false)
     indCmdParse = 0
-    computeParse(0, true)
+    computeParse(true)
     return resultParse
 }
