@@ -255,6 +255,8 @@ fun bestHighJump(jumps: String): Int {
  */
 
 fun plusMinus(expression: String): Int {
+    if (expression == "")
+        throw IllegalArgumentException("Empty string")
     val parts = expression.split(Regex(" +"))
     if (parts.size == 0)
         throw IllegalArgumentException("Empty string")
