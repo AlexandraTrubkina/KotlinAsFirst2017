@@ -164,8 +164,7 @@ fun flattenPhoneNumber(phone: String): String {
     var result = ""
     var ok = false
     for (i in 0 until phone.length) {
-        if (phone[i] == '-' || phone[i] == ' ' || phone[i] == '(' || phone[i] == ')')
-        else
+        if (!(phone[i] == '-' || phone[i] == ' ' || phone[i] == '(' || phone[i] == ')'))
             if (phone[i] == '+')
                 if (result == "")
                     result = "+"
@@ -228,17 +227,19 @@ fun bestHighJump(jumps: String): Int {
     var result = -1
     for (part in parts) {
         if (part != "")
-        try {
-            height = part.toInt()
-        } catch (e: Exception) {
-            for (i in 0 until part.length) {
-                if (part[i] == '+') {
-                    result = maxOf(result, height)
-                } else
-                    if (part[i] == '-' || part[i] == '%')
-                      else return -1
-            }
-        }
+            if (part[0] in '0'..'9')
+                try {
+                    height = part.toInt()
+                } catch (e:Exception) {
+                    return -1
+                }
+            else
+                for (i in 0 until part.length)
+                    if (part[i] == '+')
+                        result = maxOf(result, height)
+                    else
+                        if ( !(part[i] == '-' || part[i] == '%') )
+                            return -1
     }
     return result
 }
@@ -252,49 +253,41 @@ fun bestHighJump(jumps: String): Int {
  * Вернуть значение выражения (6 для примера).
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
-var parts = listOf("")
-fun missSpaces(j:Int):Int{
-    var i = j
-    while (i < parts.size && parts[i] == ""){
-        i++
-    }
-    return i
-}
 
 fun plusMinus(expression: String): Int {
-    parts = expression.split(" ")
+    val parts = expression.split(Regex(" +"))
+    if (parts.size == 0)
+        throw IllegalArgumentException("Empty string")
     var result = 0
-    var i = missSpaces(0)
-    try {
-        result = parts[i].toInt()
-        i++
-    } catch (e: Exception) {
-        throw IllegalArgumentException("Invalid symbol")
-    }
-    i = missSpaces(i)
-    while (i < parts.size) {
-        if (parts[i] == "+") {
-            i++
-            i = missSpaces(i)
+    var num = 0
+    var z = ' '
+    for (i in 0 until parts.size)
+        if (parts[i][0] in '0'..'9') {
             try {
-                result += parts[i].toInt()
+                num = parts[i].toInt()
             } catch (e: Exception) {
-                throw IllegalArgumentException("Invalid symbol")
+                throw IllegalArgumentException("Invalid symbol " + parts[i])
             }
-        } else
-            if (parts[i] == "-") {
-                i++
-                i = missSpaces(i)
-                try {
-                    result -= parts[i].toInt()
-                } catch (e: Exception) {
-                    throw IllegalArgumentException("Invalid symbol")
-                }
-            } else
-                throw IllegalArgumentException("Invalid symbol")
-        i++
-        i = missSpaces(i)
-    }
+            if (i == 0)
+                result = num
+            else
+                if (z == ' ')
+                    throw IllegalArgumentException("Invalid symbol" + parts[i])
+                else
+                    if (z == '+')
+                        result = result + num
+                    else
+                        result = result - num
+            z = ' '
+        }
+        else
+            if (parts[i] == "+" || parts[i] == "-" )
+                if (z == ' ')
+                    z = parts[i][0]
+                else
+                    throw IllegalArgumentException("Invalid symbol" + parts[i])
+            else
+                throw IllegalArgumentException("Invalid symbol" + parts[i])
     return result
 }
 
