@@ -262,19 +262,19 @@ fun plusMinus(expression: String): Int {
         throw IllegalArgumentException("Empty string")
     var result = 0
     var num = 0
-    var z = ' '
+    var z = '*'
     for (i in 0 until parts.size)
         if (parts[i][0] in '0'..'9') {
             try {
                 num = parts[i].toInt()
             } catch (e: Exception) {
-                throw IllegalArgumentException("Invalid symbol " + parts[i])
+                throw IllegalArgumentException("Invalid symbol ")
             }
             if (i == 0)
                 result = num
             else
                 if (z == ' ')
-                    throw IllegalArgumentException("Invalid symbol" + parts[i])
+                    throw IllegalArgumentException("Invalid symbol")
                 else
                     if (z == '+')
                         result = result + num
@@ -287,11 +287,14 @@ fun plusMinus(expression: String): Int {
                 if (z == ' ')
                     z = parts[i][0]
                 else
-                    throw IllegalArgumentException("Invalid symbol" + parts[i])
+                    throw IllegalArgumentException("Invalid symbol")
             else
-                throw IllegalArgumentException("Invalid symbol" + parts[i])
-    return result
-}
+                throw IllegalArgumentException("Invalid symbol")
+    if( z == ' ')
+        return result
+    else
+        throw IllegalArgumentException("number not found")
+    }
 
 /**
  * Сложная
