@@ -321,7 +321,7 @@ fun roman(n: Int): String = TODO()
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
-fun tens(n:Int): String {
+fun tens(n: Int): String {
     val x = n / 10
     when {
         x == 2 -> return "двадцать"
@@ -335,38 +335,38 @@ fun tens(n:Int): String {
     }
 }
 
-fun numLess100(n: Int, fem: Boolean): String{
-    when{
-        n == 0 ->  return "ноль"
-        n == 1 -> if(fem) return "одна"
+fun numLess100(n: Int, fem: Boolean): String {
+    when {
+        n == 0 -> return "ноль"
+        n == 1 -> if (fem) return "одна"
         else return "один"
-        n == 2 -> if(fem) return "две"
+        n == 2 -> if (fem) return "две"
         else return "два"
-        n == 3 ->return "три"
-        n == 4 ->return "четыре"
-        n == 5 ->return "пять"
-        n == 6 ->return "шесть"
-        n == 7 ->return "семь"
-        n == 8 ->return "восемь"
-        n == 9 ->return "девять"
-        n == 10 ->return "десять"
-        n == 11 ->return "одиннадцать"
-        n == 12 ->return "двенадцать"
-        n == 13 ->return "тринадцать"
-        n == 14 ->return "четырнадцать"
-        n == 15 ->return "пятнадцать"
-        n == 16 ->return "шестнадцать"
-        n == 17 ->return "семнадцать"
-        n == 18 ->return "восемнадцать"
-        n == 19 ->return "девятнадцать"
+        n == 3 -> return "три"
+        n == 4 -> return "четыре"
+        n == 5 -> return "пять"
+        n == 6 -> return "шесть"
+        n == 7 -> return "семь"
+        n == 8 -> return "восемь"
+        n == 9 -> return "девять"
+        n == 10 -> return "десять"
+        n == 11 -> return "одиннадцать"
+        n == 12 -> return "двенадцать"
+        n == 13 -> return "тринадцать"
+        n == 14 -> return "четырнадцать"
+        n == 15 -> return "пятнадцать"
+        n == 16 -> return "шестнадцать"
+        n == 17 -> return "семнадцать"
+        n == 18 -> return "восемнадцать"
+        n == 19 -> return "девятнадцать"
         n % 10 == 0 -> return tens(n)
         else -> return tens(n) + " " + numLess100(n % 10, fem)
     }
 }
 
-fun hundreds(n: Int): String{
+fun hundreds(n: Int): String {
     val x = n / 100
-    when{
+    when {
         x == 1 -> return "сто"
         x == 2 -> return "двести"
         x == 3 -> return "триста"
@@ -379,24 +379,24 @@ fun hundreds(n: Int): String{
     }
 }
 
-fun numLess1000(n: Int, fem: Boolean): String{
-    when{
+fun numLess1000(n: Int, fem: Boolean): String {
+    when {
         n < 100 -> return numLess100(n, fem)
         n % 100 == 0 -> return hundreds(n)
         else -> return hundreds(n) + " " + numLess100(n - ((n / 100) * 100), fem)
     }
 }
 
-fun thousand(n: Int): String{
+fun thousand(n: Int): String {
     var x = (n / 1000) % 100
-    when{
+    when {
         x == 0 -> return "тысяч"
         x == 1 -> return "тысяча"
         x in 2..4 -> return "тысячи"
         x in 5..20 -> return "тысяч"
         else -> {
-           x = x % 10
-            when{
+            x = x % 10
+            when {
                 x == 1 -> return "тысяча"
                 x in 2..4 -> return "тысячи"
                 else -> return "тысяч"
@@ -405,8 +405,8 @@ fun thousand(n: Int): String{
     }
 }
 
-fun numLessMil(n: Int): String{
-    when{
+fun numLessMil(n: Int): String {
+    when {
         n < 1000 -> return numLess1000(n, false)
         n == 1000 -> return thousand(n)
         n < 2000 -> return thousand(n) + " " + numLess1000(n % 1000, false)
@@ -415,16 +415,16 @@ fun numLessMil(n: Int): String{
     }
 }
 
-fun numLessMax(x: Int, n:Int):String{
+fun numLessMax(x: Int, n: Int): String {
     var a = 0
     var res = ""
-        if(x < 1000000)
-            res = numLessMil(x)
+    if (x < 1000000)
+        res = numLessMil(x)
     return res
 }
 
 fun russian(n: Int): String {
-    if( n < 0)
+    if (n < 0)
         return "минус " + numLessMax(-n, 1)
     else
         return numLessMax(n, 1)

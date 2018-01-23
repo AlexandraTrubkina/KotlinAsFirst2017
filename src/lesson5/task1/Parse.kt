@@ -129,7 +129,7 @@ fun dateDigitToStr(digital: String): String {
         return ""
     val month = parts[1]
     var res = ""
-    when{
+    when {
         month == "01" -> res = "января"
         month == "02" -> res = "февраля"
         month == "03" -> res = "марта"
@@ -144,7 +144,7 @@ fun dateDigitToStr(digital: String): String {
         month == "12" -> res = "декабря"
         else -> return ""
     }
-    return  String.format("%d", parts[0].toInt()) + " " + res + " " + parts[2]
+    return String.format("%d", parts[0].toInt()) + " " + res + " " + parts[2]
 }
 
 
@@ -377,7 +377,7 @@ var cellsParse = 0
 var countCmdParse = 0
 var limitParse = 0
 
-fun computeParse( u:Boolean ): Int {
+fun computeParse(u: Boolean): Int {
     var level = -1
     var use = u
     val firstIndex = mutableListOf<Int>()
@@ -388,7 +388,7 @@ fun computeParse( u:Boolean ): Int {
         }
         when {
             commandsParse[indCmdParse] == '>' -> {
-                if ( use ) {
+                if (use) {
                     countCmdParse++
                     indResParse++
                     if (indResParse >= cellsParse) {
@@ -397,7 +397,7 @@ fun computeParse( u:Boolean ): Int {
                 }
             }
             commandsParse[indCmdParse] == '<' -> {
-                if ( use ) {
+                if (use) {
                     countCmdParse++
                     indResParse--
                     if (indResParse < 0) {
@@ -406,19 +406,19 @@ fun computeParse( u:Boolean ): Int {
                 }
             }
             commandsParse[indCmdParse] == '+' -> {
-                if ( use ) {
+                if (use) {
                     countCmdParse++
                     resultParse[indResParse]++
                 }
             }
             commandsParse[indCmdParse] == '-' -> {
-                if ( use ) {
+                if (use) {
                     countCmdParse++
                     resultParse[indResParse]--
                 }
             }
             commandsParse[indCmdParse] == '[' -> {
-                if ( use ) {
+                if (use) {
                     countCmdParse++
                 }
                 level++
@@ -427,13 +427,13 @@ fun computeParse( u:Boolean ): Int {
                 use = use and (resultParse[indResParse] != 0)
             }
             commandsParse[indCmdParse] == ']' -> {
-                if ( use ) {
+                if (use) {
                     countCmdParse++
                 }
                 if (level == -1) {
                     throw IllegalArgumentException("] found but no [ before")
                 }
-                if ( (! use) || resultParse[indResParse] == 0 ) {
+                if ((!use) || resultParse[indResParse] == 0) {
                     use = useLst[level]
                     useLst.removeAt(level)
                     firstIndex.removeAt(level)
@@ -443,7 +443,7 @@ fun computeParse( u:Boolean ): Int {
                 }
             }
             commandsParse[indCmdParse] == ' ' -> {
-                if ( use ) {
+                if (use) {
                     countCmdParse++
                 }
             }
@@ -459,10 +459,10 @@ fun computeParse( u:Boolean ): Int {
 }
 
 fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
-    resultParse = Array<Int>(cells,{i -> 0}).toMutableList()
+    resultParse = Array<Int>(cells, { i -> 0 }).toMutableList()
     commandsParse = commands
     indCmdParse = 0
-    indResParse = cells/2
+    indResParse = cells / 2
     cellsParse = cells
     countCmdParse = 0
     limitParse = limit
