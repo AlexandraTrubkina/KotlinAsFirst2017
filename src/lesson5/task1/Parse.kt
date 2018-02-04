@@ -452,7 +452,7 @@ fun computeParse(u: Boolean): Int {
         }
         indCmdParse++
     }
-    if (level > 0) {
+    if (level > -1) {
         throw IllegalArgumentException("Unclosed [")
     }
     return 0
