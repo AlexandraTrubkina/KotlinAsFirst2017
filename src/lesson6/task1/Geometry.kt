@@ -179,7 +179,20 @@ fun lineBySegment(s: Segment): Line = TODO()
  *
  * Построить прямую по двум точкам
  */
-fun lineByPoints(a: Point, b: Point): Line = TODO()
+fun lineByPoints(a: Point, b: Point): Line {
+    var angle1 = 0.0
+    val point1: Point
+    val distance = sqrt(sqr(a.x -b.x) + sqr(a.y -b.y))
+    if (b.y >= a.y){
+        angle1 = acos((b.x - a.x) / distance)
+        point1 = a
+    }
+    else {
+        angle1 = acos((a.x - b.x) / distance)
+        point1 = b
+    }
+    return Line(point1, angle1)
+}
 
 /**
  * Сложная
